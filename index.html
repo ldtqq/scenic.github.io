@@ -353,7 +353,7 @@
                             <p class="text-xs text-white/70 mt-1">Спокойно и комфортно, медленный темп</p>
                         </button>
                         <button class="route-type-btn p-4 rounded-xl bg-white/10 text-white hover:bg-forest transition-colors text-left" data-type="hiking">
-                            <i class="fa fa-hiking text-2xl mb-2 block"></i>
+                            <i class="fa fa-male text-2xl mb-2 block"></i>
                             <span class="font-medium">Пеший поход</span>
                             <p class="text-xs text-white/70 mt-1">Испытание себя, исследование тайн</p>
                         </button>
@@ -839,12 +839,12 @@
             winter: { temp: '-5°C', clothes: 'Пуховик + шарф', route: 'Зимний маршрут для игры в снег' }
         };
         
-        // 全景图数据，用国际CDN的360全景图
+        // 全景图数据，使用官方支持跨域的示例图片
         const panoImages = {
-            spring: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Alps_mountains_panorama_360.jpg/1920px-Alps_mountains_panorama_360.jpg',
-            summer: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Alps_mountains_panorama_360.jpg/1920px-Alps_mountains_panorama_360.jpg',
-            autumn: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Alps_mountains_panorama_360.jpg/1920px-Alps_mountains_panorama_360.jpg',
-            winter: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Alps_mountains_panorama_360.jpg/1920px-Alps_mountains_panorama_360.jpg'
+            spring: 'https://photo-sphere-viewer.js.org/assets/photo-sphere-1.jpg',
+            summer: 'https://photo-sphere-viewer.js.org/assets/photo-sphere-2.jpg',
+            autumn: 'https://photo-sphere-viewer.js.org/assets/photo-sphere-3.jpg',
+            winter: 'https://photo-sphere-viewer.js.org/assets/photo-sphere-4.jpg'
         };
         
         // 客服问答（俄语）
@@ -865,7 +865,7 @@
                 viewer = PhotoSphereViewer.Viewer.create({
                     container: 'pano',
                     panorama: panoImages.summer,
-                    defaultZoomLvl: 30,
+                    defaultZoomLevel: 30, // 修复5.x版本API参数名
                     mousewheel: false,
                     hotspots: [
                         {
@@ -873,14 +873,14 @@
                             longitude: '-20deg',
                             latitude: '0deg',
                             element: document.createElement('div'),
-                            tooltip: 'Бухта Луны'
+                            tooltip: { content: 'Бухта Луны' } // 修复5.x版本tooltip格式
                         },
                         {
                             id: 'flower',
                             longitude: '40deg',
                             latitude: '-5deg',
                             element: document.createElement('div'),
-                            tooltip: 'Горные цветы'
+                            tooltip: { content: 'Горные цветы' } // 修复5.x版本tooltip格式
                         }
                     ]
                 });
@@ -888,6 +888,12 @@
                 // 加载完成后隐藏加载提示
                 viewer.addEventListener('ready', () => {
                     document.getElementById('panoLoader').style.display = 'none';
+                });
+
+                // 图片加载失败时隐藏加载提示
+                viewer.addEventListener('error', () => {
+                    document.getElementById('panoLoader').style.display = 'none';
+                    console.log('Panorama image load failed');
                 });
                 
                 // 热点点击
@@ -897,7 +903,7 @@
             } catch(e) {
                 // 如果全景加载失败，隐藏加载提示，用默认背景
                 document.getElementById('panoLoader').style.display = 'none';
-                console.log('Panorama load failed, using default background');
+                console.log('Panorama load failed, using default background', e);
             }
         }
         
@@ -987,7 +993,7 @@
                 };
                 
                 updateCounter();
-            }
+            });
         }
         
         // 四季切换
@@ -999,7 +1005,9 @@
                 if(viewer) {
                     try {
                         viewer.setPanorama(panoImages[season]);
-                    } catch(e) {}
+                    } catch(e) {
+                        console.log('Failed to switch panorama', e);
+                    }
                 }
                 
                 // 更新季节信息
@@ -1227,7 +1235,9 @@
         window.addEventListener('load', function() {
             initPanorama();
             // 默认选中夏季
-            document.querySelector('.season-btn[data-season="summer"]').click();
+            setTimeout(() => {
+                document.querySelector('.season-btn[data-season="summer"]').click();
+            }, 100);
         });
     </script>
 </body>
