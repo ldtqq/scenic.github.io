@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scenic Tourism · Иммерсивный премиальный туристический сайт</title>
-    <!-- 所有资源均为HTTPS，适配GitHub Pages -->
+    <!-- 国际CDN资源，全球都能加载 -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -86,10 +86,14 @@
         .swiper-slide {
             width: auto;
         }
-        /* 全景容器 */
+        /* 全景容器，加了兜底背景，就算加载失败也不会空白 */
         #pano {
             width: 100%;
-            height: calc(100vh - 32px); /* 去掉顶部空白，适配顶部信息栏 */
+            height: calc(100vh - 32px);
+            background: linear-gradient(135deg, #2D5547 0%, #A67C52 100%);
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920');
+            background-size: cover;
+            background-position: center;
         }
         .psv-hotspot {
             transition: transform 0.3s ease;
@@ -121,10 +125,23 @@
         .crowd-high { color: #ef4444; }
         .crowd-medium { color: #f59e0b; }
         .crowd-low { color: #10b981; }
+        /* 加载动画 */
+        .loading-spinner {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: translate(-50%,-50%) rotate(0deg); }
+            100% { transform: translate(-50%,-50%) rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-white">
-    <!-- 顶部制作人信息栏（新增，去掉顶部空白） -->
+    <!-- 顶部制作人信息栏（固定显示，不会消失） -->
     <div class="w-full bg-forest text-white text-xs md:text-sm py-1.5 px-4 text-center">
         Разработчики: <span class="font-medium">Ци Жолань</span>, <span class="font-medium">Суй Вэньсинь</span>, <span class="font-medium">Тао Жуй</span> 
         <span class="mx-2">|</span>
@@ -168,9 +185,12 @@
         </div>
     </div>
     
-    <!-- 首页Banner - 360全景 -->
+    <!-- 首页Banner - 360全景，加了加载提示 -->
     <section id="home" class="relative">
-        <div id="pano"></div>
+        <div id="pano">
+            <!-- 加载提示，全景加载的时候显示 -->
+            <div id="panoLoader" class="absolute top-1/2 left-1/2 loading-spinner"></div>
+        </div>
         
         <!-- AI语音导游按钮 -->
         <button id="voiceBtn" class="absolute top-1/2 right-8 z-10 w-14 h-14 glass rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors">
@@ -256,7 +276,7 @@
             </div>
             
             <div class="relative bg-gray-100 rounded-3xl overflow-hidden shadow-xl fade-in">
-                <img src="https://aka.doubaocdn.com/s/zXuV1wXtDZ" alt="Карта парка" class="w-full h-auto">
+                <img src="https://images.unsplash.com/photo-1569336415962-a4bd9f69c8bf?w=1200" alt="Карта парка" class="w-full h-auto">
                 
                 <!-- 地图标记 -->
                 <button class="absolute top-1/4 left-1/3 w-8 h-8 bg-forest rounded-full text-white flex items-center justify-center hover:scale-125 transition-transform spot-marker" data-spot="moonbay">
@@ -393,7 +413,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/zXuV1wXtDZ" alt="Горный пейзаж" class="w-full h-64 object-cover">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600" alt="Горный пейзаж" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
                             <h4 class="font-bold text-dark-bg">Горы Яншо</h4>
                             <p class="text-text-gray text-sm">Лучший пейзаж под небом</p>
@@ -403,7 +423,7 @@
                 
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/k1cw1wXtDZ" alt="Бухта Луны" class="w-full h-64 object-cover">
+                        <img src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=600" alt="Бухта Луны" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
                             <h4 class="font-bold text-dark-bg">Бухта Луны в Канасе</h4>
                             <p class="text-text-gray text-sm">Извилистая голубая лента</p>
@@ -411,9 +431,9 @@
                     </div>
                 </div>
                 
-                <div class="tilt-container fade-in" data-tilt">
+                <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/AdhH1wXtDe" alt="Горные цветы" class="w-full h-64 object-cover">
+                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600" alt="Горные цветы" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
                             <h4 class="font-bold text-dark-bg">Горные цветы</h4>
                             <p class="text-text-gray text-sm">Дикие цветы по всему склону</p>
@@ -423,7 +443,7 @@
                 
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/iDzM1wXtDe" alt="Осенний лес" class="w-full h-64 object-cover">
+                        <img src="https://images.unsplash.com/photo-1477346611705-65d1883cee1e?w=600" alt="Осенний лес" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
                             <h4 class="font-bold text-dark-bg">Осенний лес</h4>
                             <p class="text-text-gray text-sm">Сезон, когда лес окрашивается в разные цвета</p>
@@ -433,7 +453,7 @@
                 
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/JGKR1wXtDi" alt="Гостевой дом" class="w-full h-64 object-cover">
+                        <img src="https://images.unsplash.com/photo-1587061949409-029b3286d8ff?w=600" alt="Гостевой дом" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
                             <h4 class="font-bold text-dark-bg">Гостевой дом в горах</h4>
                             <p class="text-text-gray text-sm">Жилье, скрытое в горах</p>
@@ -443,7 +463,7 @@
                 
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/iSBB1wXtDm" alt="Местная еда" class="w-full h-64 object-cover">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600" alt="Местная еда" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
                             <h4 class="font-bold text-dark-bg">Местная кухня</h4>
                             <p class="text-text-gray text-sm">Настоящие горные деликатесы</p>
@@ -470,7 +490,7 @@
                         <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
                             <div class="flex">
                                 <div class="w-1/3 img-hover-zoom">
-                                    <img src="https://aka.doubaocdn.com/s/JGKR1wXtDi" alt="Вилла с бассейном" class="w-full h-full object-cover">
+                                    <img src="https://images.unsplash.com/photo-1587061949409-029b3286d8ff?w=300" alt="Вилла с бассейном" class="w-full h-full object-cover">
                                 </div>
                                 <div class="w-2/3 p-5">
                                     <div class="flex justify-between items-start">
@@ -488,7 +508,7 @@
                         <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
                             <div class="flex">
                                 <div class="w-1/3 img-hover-zoom">
-                                    <img src="https://aka.doubaocdn.com/s/7CL01wXtDi" alt="Традиционный двор" class="w-full h-full object-cover">
+                                    <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=300" alt="Традиционный двор" class="w-full h-full object-cover">
                                 </div>
                                 <div class="w-2/3 p-5">
                                     <div class="flex justify-between items-start">
@@ -512,7 +532,7 @@
                         <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
                             <div class="flex">
                                 <div class="w-1/3 img-hover-zoom">
-                                    <img src="https://aka.doubaocdn.com/s/iSBB1wXtDm" alt="Плов" class="w-full h-full object-cover">
+                                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=300" alt="Плов" class="w-full h-full object-cover">
                                 </div>
                                 <div class="w-2/3 p-5">
                                     <div class="flex justify-between items-start">
@@ -530,7 +550,7 @@
                         <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
                             <div class="flex">
                                 <div class="w-1/3 img-hover-zoom">
-                                    <img src="https://aka.doubaocdn.com/s/Vhgj1wXtDm" alt="Рис с яйцом" class="w-full h-full object-cover">
+                                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300" alt="Рис с яйцом" class="w-full h-full object-cover">
                                 </div>
                                 <div class="w-2/3 p-5">
                                     <div class="flex justify-between items-start">
@@ -712,25 +732,25 @@
             moonbay: {
                 title: 'Бухта Луны в Канасе',
                 desc: 'Извилистая река, как голубая лента, рисует идеальную форму полумесяца среди леса. Утренний туман покрывает долину, как будто вы в сказке.',
-                img: 'https://aka.doubaocdn.com/s/k1cw1wXtDZ',
+                img: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=600',
                 time: '08:00 - 18:00'
             },
             flower: {
                 title: 'Горные цветы',
                 desc: 'Летом на горных лугах дикие цветы расцветают повсюду, контрастируя с далекими снежными горами.',
-                img: 'https://aka.doubaocdn.com/s/AdhH1wXtDe',
+                img: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600',
                 time: '07:00 - 19:00'
             },
             ancient: {
                 title: 'Древняя почтовая дорога',
                 desc: 'Тысячелетняя почтовая дорога пересекает горы, видела множество торговцев. Потертые камни рассказывают историю.',
-                img: 'https://aka.doubaocdn.com/s/iDzM1wXtDe',
+                img: 'https://images.unsplash.com/photo-1477346611705-65d1883cee1e?w=600',
                 time: 'Круглосуточно'
             },
             hotspring: {
                 title: 'Горячие источники в горах',
                 desc: 'Природные горячие источники, богатые минералами, снимают усталость, дарят спокойствие в горах.',
-                img: 'https://aka.doubaocdn.com/s/JGKR1wXtDi',
+                img: 'https://images.unsplash.com/photo-1587061949409-029b3286d8ff?w=600',
                 time: '10:00 - 22:00'
             }
         };
@@ -819,12 +839,12 @@
             winter: { temp: '-5°C', clothes: 'Пуховик + шарф', route: 'Зимний маршрут для игры в снег' }
         };
         
-        // 全景图数据
+        // 全景图数据，用国际CDN的360全景图
         const panoImages = {
-            spring: 'https://aka.doubaocdn.com/s/AdhH1wXtDe',
-            summer: 'https://aka.doubaocdn.com/s/k1cw1wXtDZ',
-            autumn: 'https://aka.doubaocdn.com/s/iDzM1wXtDe',
-            winter: 'https://aka.doubaocdn.com/s/zXuV1wXtDZ'
+            spring: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Alps_mountains_panorama_360.jpg/1920px-Alps_mountains_panorama_360.jpg',
+            summer: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Alps_mountains_panorama_360.jpg/1920px-Alps_mountains_panorama_360.jpg',
+            autumn: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Alps_mountains_panorama_360.jpg/1920px-Alps_mountains_panorama_360.jpg',
+            winter: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Alps_mountains_panorama_360.jpg/1920px-Alps_mountains_panorama_360.jpg'
         };
         
         // 客服问答（俄语）
@@ -841,33 +861,44 @@
         
         // 初始化360全景
         function initPanorama() {
-            viewer = PhotoSphereViewer.Viewer.create({
-                container: 'pano',
-                panorama: panoImages.summer,
-                defaultZoomLvl: 30,
-                mousewheel: false,
-                hotspots: [
-                    {
-                        id: 'moonbay',
-                        longitude: '-20deg',
-                        latitude: '0deg',
-                        element: document.createElement('div'),
-                        tooltip: 'Бухта Луны'
-                    },
-                    {
-                        id: 'flower',
-                        longitude: '40deg',
-                        latitude: '-5deg',
-                        element: document.createElement('div'),
-                        tooltip: 'Горные цветы'
-                    }
-                ]
-            });
-            
-            // 热点点击
-            viewer.addEventListener('click-hotspot', (e) => {
-                showSpotModal(e.hotspotId);
-            });
+            try {
+                viewer = PhotoSphereViewer.Viewer.create({
+                    container: 'pano',
+                    panorama: panoImages.summer,
+                    defaultZoomLvl: 30,
+                    mousewheel: false,
+                    hotspots: [
+                        {
+                            id: 'moonbay',
+                            longitude: '-20deg',
+                            latitude: '0deg',
+                            element: document.createElement('div'),
+                            tooltip: 'Бухта Луны'
+                        },
+                        {
+                            id: 'flower',
+                            longitude: '40deg',
+                            latitude: '-5deg',
+                            element: document.createElement('div'),
+                            tooltip: 'Горные цветы'
+                        }
+                    ]
+                });
+                
+                // 加载完成后隐藏加载提示
+                viewer.addEventListener('ready', () => {
+                    document.getElementById('panoLoader').style.display = 'none';
+                });
+                
+                // 热点点击
+                viewer.addEventListener('click-hotspot', (e) => {
+                    showSpotModal(e.hotspotId);
+                });
+            } catch(e) {
+                // 如果全景加载失败，隐藏加载提示，用默认背景
+                document.getElementById('panoLoader').style.display = 'none';
+                console.log('Panorama load failed, using default background');
+            }
         }
         
         // 导航栏滚动效果
@@ -956,7 +987,7 @@
                 };
                 
                 updateCounter();
-            });
+            }
         }
         
         // 四季切换
@@ -965,7 +996,11 @@
                 const season = this.dataset.season;
                 
                 // 更新全景图
-                viewer.setPanorama(panoImages[season]);
+                if(viewer) {
+                    try {
+                        viewer.setPanorama(panoImages[season]);
+                    } catch(e) {}
+                }
                 
                 // 更新季节信息
                 document.getElementById('seasonTemp').textContent = seasonData[season].temp;
