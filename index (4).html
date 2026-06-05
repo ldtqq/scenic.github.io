@@ -1,0 +1,758 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山水秘境 | 轻奢文旅目的地</title>
+    <!-- 引入外部资源 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'forest': '#2D5547',
+                        'golden': '#A67C52',
+                        'dark-bg': '#1A2320',
+                        'text-gray': '#666666',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .glass {
+                background: rgba(255, 255, 255, 0.15);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            }
+            .glass-dark {
+                background: rgba(26, 35, 32, 0.85);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .fade-in {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .parallax-bg {
+                will-change: transform;
+            }
+        }
+    </style>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .swiper-slide {
+            width: auto;
+        }
+        .img-hover-zoom {
+            overflow: hidden;
+        }
+        .img-hover-zoom img {
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        .img-hover-zoom:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.05);
+        }
+        /* 数字动画 */
+        .counter {
+            transition: all 0.1s ease;
+        }
+        /* 侧边菜单动画 */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <a href="#home" class="text-white text-2xl font-bold tracking-wider">山水秘境</a>
+            
+            <!-- 桌面端导航 -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-white/90 hover:text-white transition-colors">首页</a>
+                <a href="#spots" class="text-white/90 hover:text-white transition-colors">景点</a>
+                <a href="#guide" class="text-white/90 hover:text-white transition-colors">攻略</a>
+                <a href="#food" class="text-white/90 hover:text-white transition-colors">食宿</a>
+                <a href="#news" class="text-white/90 hover:text-white transition-colors">资讯</a>
+                <a href="#about" class="text-white/90 hover:text-white transition-colors">预约</a>
+            </div>
+            
+            <!-- 移动端汉堡按钮 -->
+            <button id="menuBtn" class="md:hidden text-white text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- 移动端侧边菜单 -->
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 h-full w-64 glass-dark z-50 p-6">
+        <button id="closeMenu" class="absolute top-4 right-4 text-white text-xl">
+            <i class="fa fa-times"></i>
+        </button>
+        <div class="mt-12 flex flex-col space-y-6">
+            <a href="#home" class="text-white text-lg">首页</a>
+            <a href="#spots" class="text-white text-lg">景点</a>
+            <a href="#guide" class="text-white text-lg">攻略</a>
+            <a href="#food" class="text-white text-lg">食宿</a>
+            <a href="#news" class="text-white text-lg">资讯</a>
+            <a href="#about" class="text-white text-lg">预约</a>
+        </div>
+    </div>
+    
+    <!-- 首页Banner -->
+    <section id="home" class="relative h-screen overflow-hidden">
+        <div id="parallaxImg" class="parallax-bg absolute inset-0 w-full h-full">
+            <img src="https://aka.doubaocdn.com/s/zXuV1wXtDZ" alt="山水航拍" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>
+        </div>
+        
+        <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-4">
+            <h1 class="text-[clamp(2.5rem,6vw,5rem)] font-bold text-white mb-4 leading-tight">
+                寻一隅山水秘境
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.5rem)] text-white/80 mb-8 max-w-2xl">
+                赴一场自然之约，融合自然地貌与千年人文遗存的全域文旅目的地
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#about" class="px-8 py-3 bg-forest text-white rounded-full hover:bg-forest/90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fa fa-calendar-check-o mr-2"></i>即刻预约游览
+                </a>
+                <a href="#spots" class="px-8 py-3 glass text-white rounded-full hover:bg-white/20 transition-all">
+                    <i class="fa fa-compass mr-2"></i>探索景点
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+            <i class="fa fa-chevron-down text-2xl"></i>
+        </div>
+    </section>
+    
+    <!-- 数据卡片区 -->
+    <section class="relative -mt-20 z-20 container mx-auto px-4 md:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div class="glass rounded-2xl p-6 text-center fade-in">
+                <div class="text-golden text-3xl mb-2"><i class="fa fa-users"></i></div>
+                <div class="counter text-3xl md:text-4xl font-bold text-white" data-target="128">0</div>
+                <div class="text-white/70 text-sm mt-1">万+游玩人次</div>
+            </div>
+            <div class="glass rounded-2xl p-6 text-center fade-in">
+                <div class="text-golden text-3xl mb-2"><i class="fa fa-history"></i></div>
+                <div class="counter text-3xl md:text-4xl font-bold text-white" data-target="1300">0</div>
+                <div class="text-white/70 text-sm mt-1">年历史渊源</div>
+            </div>
+            <div class="glass rounded-2xl p-6 text-center fade-in">
+                <div class="text-golden text-3xl mb-2"><i class="fa fa-map-marker"></i></div>
+                <div class="counter text-3xl md:text-4xl font-bold text-white" data-target="36">0</div>
+                <div class="text-white/70 text-sm mt-1">处特色景观</div>
+            </div>
+            <div class="glass rounded-2xl p-6 text-center fade-in">
+                <div class="text-golden text-3xl mb-2"><i class="fa fa-trophy"></i></div>
+                <div class="counter text-3xl md:text-4xl font-bold text-white" data-target="18">0</div>
+                <div class="text-white/70 text-sm mt-1">项行业荣誉</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 精选景点 -->
+    <section id="spots" class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">精选景点</h2>
+                <p class="text-text-gray max-w-2xl mx-auto">探索这片土地上的自然奇观与人文瑰宝，每一处都藏着不一样的故事</p>
+            </div>
+            
+            <!-- 景点1 -->
+            <div class="flex flex-col md:flex-row items-center gap-8 mb-16 fade-in">
+                <div class="w-full md:w-1/2 img-hover-zoom rounded-2xl overflow-hidden shadow-xl">
+                    <img src="https://aka.doubaocdn.com/s/k1cw1wXtDZ" alt="月亮湾" class="w-full h-80 object-cover">
+                </div>
+                <div class="w-full md:w-1/2">
+                    <span class="inline-block px-3 py-1 bg-forest/10 text-forest text-sm rounded-full mb-4">自然景观</span>
+                    <h3 class="text-2xl md:text-3xl font-bold text-dark-bg mb-4">喀纳斯月亮湾</h3>
+                    <p class="text-text-gray mb-6 leading-relaxed">
+                        蜿蜒的河水如同蓝色的绸带，在森林间勾勒出完美的月牙形状。清晨的薄雾笼罩着河谷，
+                        仿佛置身于仙境之中，是摄影爱好者的天堂。
+                    </p>
+                    <a href="#" class="inline-flex items-center text-forest font-medium hover:gap-3 transition-all">
+                        查看详情 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 景点2 -->
+            <div class="flex flex-col md:flex-row-reverse items-center gap-8 mb-16 fade-in">
+                <div class="w-full md:w-1/2 img-hover-zoom rounded-2xl overflow-hidden shadow-xl">
+                    <img src="https://aka.doubaocdn.com/s/AdhH1wXtDe" alt="花海" class="w-full h-80 object-cover">
+                </div>
+                <div class="w-full md:w-1/2">
+                    <span class="inline-block px-3 py-1 bg-golden/10 text-golden text-sm rounded-full mb-4">网红打卡</span>
+                    <h3 class="text-2xl md:text-3xl font-bold text-dark-bg mb-4">高山花海</h3>
+                    <p class="text-text-gray mb-6 leading-relaxed">
+                        夏季的高山草甸，漫山遍野的野花竞相绽放，与远处的雪山形成鲜明的对比。
+                        在这里，你可以尽情享受自然的馈赠，感受生命的蓬勃。
+                    </p>
+                    <a href="#" class="inline-flex items-center text-forest font-medium hover:gap-3 transition-all">
+                        查看详情 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 景点3 -->
+            <div class="flex flex-col md:flex-row items-center gap-8 mb-16 fade-in">
+                <div class="w-full md:w-1/2 img-hover-zoom rounded-2xl overflow-hidden shadow-xl">
+                    <img src="https://aka.doubaocdn.com/s/iDzM1wXtDe" alt="秋景" class="w-full h-80 object-cover">
+                </div>
+                <div class="w-full md:w-1/2">
+                    <span class="inline-block px-3 py-1 bg-forest/10 text-forest text-sm rounded-full mb-4">人文古迹</span>
+                    <h3 class="text-2xl md:text-3xl font-bold text-dark-bg mb-4">古驿道遗址</h3>
+                    <p class="text-text-gray mb-6 leading-relaxed">
+                        千年古驿道穿越山林，见证了无数商旅的往来。斑驳的石板路，诉说着历史的沧桑，
+                        漫步其中，仿佛能听到古代的马蹄声。
+                    </p>
+                    <a href="#" class="inline-flex items-center text-forest font-medium hover:gap-3 transition-all">
+                        查看详情 <i class="fa fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 四季风光 -->
+    <section class="py-20 md:py-32 bg-dark-bg">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-white mb-4">四季风光</h2>
+                <p class="text-white/70 max-w-2xl mx-auto">无论何时到来，这里都有不一样的美景等你发现</p>
+            </div>
+            
+            <div class="swiper seasons-swiper overflow-hidden fade-in">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="relative w-72 h-96 rounded-2xl overflow-hidden group">
+                            <img src="https://aka.doubaocdn.com/s/AdhH1wXtDe" alt="春季" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 text-white">
+                                <h3 class="text-xl font-bold">春·踏青</h3>
+                                <p class="text-white/70 text-sm">山花烂漫，万物复苏</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="relative w-72 h-96 rounded-2xl overflow-hidden group">
+                            <img src="https://aka.doubaocdn.com/s/k1cw1wXtDZ" alt="夏季" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 text-white">
+                                <h3 class="text-xl font-bold">夏·避暑</h3>
+                                <p class="text-white/70 text-sm">清凉山水，绿意盎然</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="relative w-72 h-96 rounded-2xl overflow-hidden group">
+                            <img src="https://aka.doubaocdn.com/s/iDzM1wXtDe" alt="秋季" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 text-white">
+                                <h3 class="text-xl font-bold">秋·赏叶</h3>
+                                <p class="text-white/70 text-sm">层林尽染，五彩斑斓</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="relative w-72 h-96 rounded-2xl overflow-hidden group">
+                            <img src="https://aka.doubaocdn.com/s/zXuV1wXtDZ" alt="冬季" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 text-white">
+                                <h3 class="text-xl font-bold">冬·玩雪</h3>
+                                <p class="text-white/70 text-sm">银装素裹，静谧如画</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="relative w-72 h-96 rounded-2xl overflow-hidden group">
+                            <img src="https://aka.doubaocdn.com/s/JGKR1wXtDi" alt="温泉" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-6 left-6 text-white">
+                                <h3 class="text-xl font-bold">冬·温泉</h3>
+                                <p class="text-white/70 text-sm">暖汤疗愈，放松身心</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 游玩攻略 -->
+    <section id="guide" class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">游玩攻略</h2>
+                <p class="text-text-gray max-w-2xl mx-auto">专业路线规划，让你的旅程更加轻松惬意</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- 一日游 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow fade-in">
+                    <div class="img-hover-zoom h-48">
+                        <img src="https://aka.doubaocdn.com/s/zXuV1wXtDZ" alt="一日游" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark-bg mb-2">经典一日游</h3>
+                        <p class="text-text-gray text-sm mb-4">核心景点全覆盖，轻松打卡网红地标</p>
+                        <div class="flex items-center text-golden text-sm">
+                            <i class="fa fa-map-o mr-2"></i>
+                            <span>8小时 · 12公里</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 两日游 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow fade-in">
+                    <div class="img-hover-zoom h-48">
+                        <img src="https://aka.doubaocdn.com/s/k1cw1wXtDZ" alt="两日游" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark-bg mb-2">深度两日游</h3>
+                        <p class="text-text-gray text-sm mb-4">慢下来，感受山水间的宁静与美好</p>
+                        <div class="flex items-center text-golden text-sm">
+                            <i class="fa fa-map-o mr-2"></i>
+                            <span>2天 · 25公里</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 亲子游 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow fade-in">
+                    <div class="img-hover-zoom h-48">
+                        <img src="https://aka.doubaocdn.com/s/AdhH1wXtDe" alt="亲子游" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark-bg mb-2">亲子趣味游</h3>
+                        <p class="text-text-gray text-sm mb-4">寓教于乐，给孩子一个自然课堂</p>
+                        <div class="flex items-center text-golden text-sm">
+                            <i class="fa fa-map-o mr-2"></i>
+                            <span>轻松路线 · 亲子友好</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 徒步 -->
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow fade-in">
+                    <div class="img-hover-zoom h-48">
+                        <img src="https://aka.doubaocdn.com/s/iDzM1wXtDe" alt="徒步" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark-bg mb-2">徒步探险</h3>
+                        <p class="text-text-gray text-sm mb-4">挑战自我，探索未被发现的秘境</p>
+                        <div class="flex items-center text-golden text-sm">
+                            <i class="fa fa-map-o mr-2"></i>
+                            <span>3天 · 45公里</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 食宿配套 -->
+    <section id="food" class="py-20 md:py-32 bg-gray-50">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">食宿配套</h2>
+                <p class="text-text-gray max-w-2xl mx-auto">住山间民宿，品地道美食，享受最纯粹的度假体验</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 民宿 -->
+                <div>
+                    <h3 class="text-2xl font-bold text-dark-bg mb-6 fade-in">精品民宿</h3>
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
+                            <div class="flex">
+                                <div class="w-1/3 img-hover-zoom">
+                                    <img src="https://aka.doubaocdn.com/s/JGKR1wXtDi" alt="泳池民宿" class="w-full h-full object-cover">
+                                </div>
+                                <div class="w-2/3 p-5">
+                                    <div class="flex justify-between items-start">
+                                        <h4 class="font-bold text-dark-bg">山景泳池别墅</h4>
+                                        <span class="text-golden font-bold">¥1280/晚</span>
+                                    </div>
+                                    <p class="text-text-gray text-sm mt-2">独立泳池，山景露台，24小时管家服务</p>
+                                    <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button class="text-forest text-sm font-medium">立即预约</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
+                            <div class="flex">
+                                <div class="w-1/3 img-hover-zoom">
+                                    <img src="https://aka.doubaocdn.com/s/7CL01wXtDi" alt="古风民宿" class="w-full h-full object-cover">
+                                </div>
+                                <div class="w-2/3 p-5">
+                                    <div class="flex justify-between items-start">
+                                        <h4 class="font-bold text-dark-bg">古风庭院民宿</h4>
+                                        <span class="text-golden font-bold">¥680/晚</span>
+                                    </div>
+                                    <p class="text-text-gray text-sm mt-2">中式庭院，古色古香，体验慢生活</p>
+                                    <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button class="text-forest text-sm font-medium">立即预约</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 美食 -->
+                <div>
+                    <h3 class="text-2xl font-bold text-dark-bg mb-6 fade-in">特色美食</h3>
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
+                            <div class="flex">
+                                <div class="w-1/3 img-hover-zoom">
+                                    <img src="https://aka.doubaocdn.com/s/iSBB1wXtDm" alt="手抓饭" class="w-full h-full object-cover">
+                                </div>
+                                <div class="w-2/3 p-5">
+                                    <div class="flex justify-between items-start">
+                                        <h4 class="font-bold text-dark-bg">草原手抓饭</h4>
+                                        <span class="text-golden font-bold">¥68/份</span>
+                                    </div>
+                                    <p class="text-text-gray text-sm mt-2">正宗本地做法，羊肉鲜嫩，米饭飘香</p>
+                                    <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button class="text-forest text-sm font-medium">提前预订</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
+                            <div class="flex">
+                                <div class="w-1/3 img-hover-zoom">
+                                    <img src="https://aka.doubaocdn.com/s/Vhgj1wXtDm" alt="蛋炒饭" class="w-full h-full object-cover">
+                                </div>
+                                <div class="w-2/3 p-5">
+                                    <div class="flex justify-between items-start">
+                                        <h4 class="font-bold text-dark-bg">农家蛋炒饭</h4>
+                                        <span class="text-golden font-bold">¥28/份</span>
+                                    </div>
+                                    <p class="text-text-gray text-sm mt-2">本地土鸡蛋，柴火炒制，童年的味道</p>
+                                    <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button class="text-forest text-sm font-medium">提前预订</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 资讯动态 -->
+    <section id="news" class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">资讯动态</h2>
+                <p class="text-text-gray max-w-2xl mx-auto">了解景区最新活动与通知</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="fade-in">
+                    <div class="img-hover-zoom rounded-2xl overflow-hidden mb-4">
+                        <img src="https://aka.doubaocdn.com/s/AdhH1wXtDe" alt="花海节" class="w-full h-56 object-cover">
+                    </div>
+                    <span class="text-golden text-sm">2026-06-01</span>
+                    <h3 class="text-xl font-bold text-dark-bg mt-2 mb-2">第七届高山花海节盛大开幕</h3>
+                    <p class="text-text-gray text-sm">为期一个月的花海节，将带来精彩的民俗表演、美食市集...</p>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="img-hover-zoom rounded-2xl overflow-hidden mb-4">
+                        <img src="https://aka.doubaocdn.com/s/k1cw1wXtDZ" alt="开园通知" class="w-full h-56 object-cover">
+                    </div>
+                    <span class="text-golden text-sm">2026-05-20</span>
+                    <h3 class="text-xl font-bold text-dark-bg mt-2 mb-2">景区夏季运营时间调整通知</h3>
+                    <p class="text-text-gray text-sm">为了给游客更好的体验，景区将从6月1日起调整开放时间...</p>
+                </div>
+                
+                <div class="fade-in">
+                    <div class="img-hover-zoom rounded-2xl overflow-hidden mb-4">
+                        <img src="https://aka.doubaocdn.com/s/iDzM1wXtDe" alt="文旅新闻" class="w-full h-56 object-cover">
+                    </div>
+                    <span class="text-golden text-sm">2026-05-10</span>
+                    <h3 class="text-xl font-bold text-dark-bg mt-2 mb-2">我景区获评国家级生态旅游示范区</h3>
+                    <p class="text-text-gray text-sm">经过严格评审，我景区成功获评国家级生态旅游示范区...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 关于我们 & 预约 -->
+    <section id="about" class="py-20 md:py-32 bg-dark-bg">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- 关于我们 -->
+                <div class="fade-in">
+                    <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-white mb-6">关于我们</h2>
+                    <p class="text-white/70 leading-relaxed mb-6">
+                        山水秘境景区，融合自然地貌与千年人文遗存，集观光、休闲、研学、康养于一体的全域文旅目的地。
+                        我们致力于为每一位游客提供最优质的服务，让你在这片山水之间，找到内心的宁静。
+                    </p>
+                    <p class="text-white/70 leading-relaxed mb-8">
+                        景区占地面积120平方公里，拥有36处特色景观，年接待游客超过10万人次。
+                        先后获得国家级风景名胜区、国家5A级旅游景区、国家级生态旅游示范区等多项荣誉。
+                    </p>
+                    
+                    <!-- 地图 -->
+                    <div class="rounded-2xl overflow-hidden h-64">
+                        <iframe 
+                            src="https://uri.amap.com/marker?position=87.119439,48.150082&name=山水秘境景区&src=webview"
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+                
+                <!-- 预约表单 -->
+                <div class="glass rounded-3xl p-8 fade-in">
+                    <h3 class="text-2xl font-bold text-white mb-6">在线预约</h3>
+                    <form class="space-y-5">
+                        <div>
+                            <label class="block text-white/80 text-sm mb-2">姓名</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors" placeholder="请输入您的姓名">
+                        </div>
+                        <div>
+                            <label class="block text-white/80 text-sm mb-2">出行日期</label>
+                            <input type="date" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-forest transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-white/80 text-sm mb-2">出行人数</label>
+                            <select class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-forest transition-colors">
+                                <option value="1">1人</option>
+                                <option value="2">2人</option>
+                                <option value="3">3人</option>
+                                <option value="4">4人</option>
+                                <option value="5+">5人以上</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-white/80 text-sm mb-2">联系方式</label>
+                            <input type="tel" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors" placeholder="请输入您的手机号">
+                        </div>
+                        <div>
+                            <label class="block text-white/80 text-sm mb-2">备注需求</label>
+                            <textarea class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors h-24 resize-none" placeholder="如有特殊需求，请在此说明"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-forest text-white rounded-xl hover:bg-forest/90 transition-colors font-medium">
+                            提交预约申请
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 页脚 -->
+    <footer class="bg-dark-bg border-t border-white/10 py-10">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-white/60 text-sm mb-4 md:mb-0">
+                    © 2026 山水秘境景区 版权所有 | 地址：XX省XX市XX县
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-white/60 hover:text-white transition-colors"><i class="fa fa-weixin text-xl"></i></a>
+                    <a href="#" class="text-white/60 hover:text-white transition-colors"><i class="fa fa-weibo text-xl"></i></a>
+                    <a href="#" class="text-white/60 hover:text-white transition-colors"><i class="fa fa-phone text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 侧边悬浮按钮 -->
+    <div class="fixed right-6 bottom-6 flex flex-col space-y-3 z-40">
+        <button class="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+            <i class="fa fa-comments"></i>
+        </button>
+        <button class="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+            <i class="fa fa-map-marker"></i>
+        </button>
+        <button id="backToTop" class="w-12 h-12 glass rounded-full flex items-center justify-center text-white hover:bg-white/20 transition-colors opacity-0 invisible transition-all">
+            <i class="fa fa-arrow-up"></i>
+        </button>
+    </div>
+    
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            // 导航栏样式变化
+            if (window.scrollY > 50) {
+                navbar.classList.add('glass-dark');
+            } else {
+                navbar.classList.remove('glass-dark');
+            }
+            
+            // 回到顶部按钮显示
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
+            
+            // 视差滚动效果
+            const parallaxImg = document.getElementById('parallaxImg');
+            if (parallaxImg) {
+                const scrolled = window.scrollY;
+                parallaxImg.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+        
+        // 回到顶部
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // 移动端菜单
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('open');
+        });
+        
+        closeMenu.addEventListener('click', function() {
+            mobileMenu.classList.remove('open');
+        });
+        
+        // 点击菜单链接关闭菜单
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+            });
+        });
+        
+        // 滚动渐显动画
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // 如果是数据卡片，触发数字动画
+                    if (entry.target.querySelector('.counter')) {
+                        runCounters();
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        fadeElements.forEach(el => {
+            observer.observe(el);
+        });
+        
+        // 数字滚动动画
+        let countersRun = false;
+        function runCounters() {
+            if (countersRun) return;
+            countersRun = true;
+            
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000;
+                const step = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+        
+        // 四季轮播
+        const swiper = new Swiper('.seasons-swiper', {
+            slidesPerView: 'auto',
+            spaceBetween: 20,
+            loop: true,
+            freeMode: {
+                enabled: true,
+                sticky: true,
+            },
+            grabCursor: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                640: {
+                    spaceBetween: 30,
+                }
+            }
+        });
+        
+        // 表单提交
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('预约申请已提交，我们将尽快与您联系！');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
