@@ -885,212 +885,212 @@
             type();
         }
 
-        // 滚动进度条
-        const progressBar = document.getElementById('progress-bar');
-        window.addEventListener('scroll', () => {
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            progressBar.style.width = scrolled + "%";
-        });
+        window.addEventListener('DOMContentLoaded', () => {
+            // 滚动进度条
+            const progressBar = document.getElementById('progress-bar');
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            });
 
-        // 导航栏滚动效果
-        const navbar = document.getElementById('navbar');
-        const logo = document.getElementById('logo');
-        const navLinks = navbar.querySelectorAll('a');
-        const menuBtn = navbar.querySelector('button');
+            // 导航栏滚动效果
+            const navbar = document.getElementById('navbar');
+            const logo = document.getElementById('logo');
+            const navLinks = navbar.querySelectorAll('a');
+            const menuBtn = navbar.querySelector('button');
 
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.classList.add('bg-white', 'shadow-card');
-                logo.classList.remove('text-white');
-                logo.classList.add('text-primary');
-                navLinks.forEach(link => {
-                    link.classList.remove('text-white');
-                    link.classList.add('text-neutral-400');
-                });
-                menuBtn.classList.remove('text-white');
-                menuBtn.classList.add('text-neutral-400');
-            } else {
-                navbar.classList.remove('bg-white', 'shadow-card');
-                logo.classList.add('text-white');
-                logo.classList.remove('text-primary');
-                navLinks.forEach(link => {
-                    link.classList.add('text-white');
-                    link.classList.remove('text-neutral-400');
-                });
-                menuBtn.classList.add('text-white');
-                menuBtn.classList.remove('text-neutral-400');
-            }
-        });
-
-        // 滚动动画
-        const fadeElements = document.querySelectorAll('.fade-up');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('bg-white', 'shadow-card');
+                    logo.classList.remove('text-white');
+                    logo.classList.add('text-primary');
+                    navLinks.forEach(link => {
+                        link.classList.remove('text-white');
+                        link.classList.add('text-neutral-400');
+                    });
+                    menuBtn.classList.remove('text-white');
+                    menuBtn.classList.add('text-neutral-400');
+                } else {
+                    navbar.classList.remove('bg-white', 'shadow-card');
+                    logo.classList.add('text-white');
+                    logo.classList.remove('text-primary');
+                    navLinks.forEach(link => {
+                        link.classList.add('text-white');
+                        link.classList.remove('text-neutral-400');
+                    });
+                    menuBtn.classList.add('text-white');
+                    menuBtn.classList.remove('text-neutral-400');
                 }
             });
-        }, {
-            threshold: 0.1
-        });
 
-        fadeElements.forEach(el => observer.observe(el));
+            // 滚动动画
+            const fadeElements = document.querySelectorAll('.fade-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
 
-        // 英雄区视差效果
-        const heroBg = document.getElementById('hero-bg');
-        window.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * 20;
-            heroBg.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
-        });
+            fadeElements.forEach(el => observer.observe(el));
 
-        // 随机目的地
-        const randomDestBtn = document.getElementById('random-destination');
-        const destinations = [
-            { img: 'https://aka.doubaocdn.com/s/nIT51wXzXI', name: 'Мир ждет, чтобы вы его исследовали' },
-            { img: 'https://aka.doubaocdn.com/s/kuUu1wXzWt', name: 'Мальдивы' },
-            { img: 'https://aka.doubaocdn.com/s/Es431wXzWy', name: 'Швейцарские Альпы' },
-            { img: 'https://aka.doubaocdn.com/s/19Uy1wXzX3', name: 'Киото, Япония' },
-            { img: 'https://aka.doubaocdn.com/s/T0H11wXzXM', name: 'Бали' },
-            { img: 'https://aka.doubaocdn.com/s/miFq1wXzXR', name: 'Французские замки' },
-            { img: 'https://aka.doubaocdn.com/s/bWWh1wXzXV', name: 'Африканское сафари' },
-            { img: 'https://aka.doubaocdn.com/s/qWUe1wXzXi', name: 'Антарктида' }
-        ];
+            // 英雄区视差效果
+            const heroBg = document.getElementById('hero-bg');
+            window.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+                heroBg.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+            });
 
-        randomDestBtn.addEventListener('click', () => {
-            const random = destinations[Math.floor(Math.random() * destinations.length)];
-            heroBg.src = random.img;
-            const title = document.getElementById('hero-title');
-            typeWriter(title, random.name);
-        });
+            // 随机目的地
+            const randomDestBtn = document.getElementById('random-destination');
+            const destinations = [
+                { img: 'https://aka.doubaocdn.com/s/nIT51wXzXI', name: 'Мир ждет, чтобы вы его исследовали' },
+                { img: 'https://aka.doubaocdn.com/s/kuUu1wXzWt', name: 'Мальдивы' },
+                { img: 'https://aka.doubaocdn.com/s/Es431wXzWy', name: 'Швейцарские Альпы' },
+                { img: 'https://aka.doubaocdn.com/s/19Uy1wXzX3', name: 'Киото, Япония' },
+                { img: 'https://aka.doubaocdn.com/s/T0H11wXzXM', name: 'Бали' },
+                { img: 'https://aka.doubaocdn.com/s/miFq1wXzXR', name: 'Французские замки' },
+                { img: 'https://aka.doubaocdn.com/s/bWWh1wXzXV', name: 'Африканское сафари' },
+                { img: 'https://aka.doubaocdn.com/s/qWUe1wXzXi', name: 'Антарктида' }
+            ];
 
-        // 百度搜索集成
-        const searchBtn = document.getElementById('search-btn');
-        const searchInput = document.getElementById('search-input');
+            randomDestBtn.addEventListener('click', () => {
+                const random = destinations[Math.floor(Math.random() * destinations.length)];
+                heroBg.src = random.img;
+                const title = document.getElementById('hero-title');
+                typeWriter(title, random.name);
+            });
 
-        searchBtn.addEventListener('click', () => {
-            const query = searchInput.value;
-            if (query) {
-                window.open(`https://www.baidu.com/s?wd=${encodeURIComponent(query)}`, '_blank');
-            }
-        });
+            // 猫头鹰旅游(猫途鹰)搜索集成
+            const searchBtn = document.getElementById('search-btn');
+            const searchInput = document.getElementById('search-input');
 
-        // 倒计时
-        function updateCountdown() {
-            const days = document.getElementById('days');
-            const hours = document.getElementById('hours');
-            const minutes = document.getElementById('minutes');
-            const seconds = document.getElementById('seconds');
-            
-            if (!days || !hours || !minutes || !seconds) return;
-            
-            let s = parseInt(seconds.textContent);
-            let m = parseInt(minutes.textContent);
-            let h = parseInt(hours.textContent);
-            let d = parseInt(days.textContent);
-            
-            s--;
-            if (s < 0) {
-                s = 59;
-                m--;
-                if (m < 0) {
-                    m = 59;
-                    h--;
-                    if (h < 0) {
-                        h = 23;
-                        d--;
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value;
+                if (query) {
+                    window.open(`https://www.tripadvisor.cn/Search?q=${encodeURIComponent(query)}`, '_blank');
+                }
+            });
+
+            // 倒计时
+            function updateCountdown() {
+                const days = document.getElementById('days');
+                const hours = document.getElementById('hours');
+                const minutes = document.getElementById('minutes');
+                const seconds = document.getElementById('seconds');
+                
+                if (!days || !hours || !minutes || !seconds) return;
+                
+                let s = parseInt(seconds.textContent);
+                let m = parseInt(minutes.textContent);
+                let h = parseInt(hours.textContent);
+                let d = parseInt(days.textContent);
+                
+                s--;
+                if (s < 0) {
+                    s = 59;
+                    m--;
+                    if (m < 0) {
+                        m = 59;
+                        h--;
+                        if (h < 0) {
+                            h = 23;
+                            d--;
+                        }
                     }
                 }
-            }
-            
-            seconds.textContent = s.toString().padStart(2, '0');
-            minutes.textContent = m.toString().padStart(2, '0');
-            hours.textContent = h.toString().padStart(2, '0');
-            days.textContent = d.toString().padStart(2, '0');
-        }
-
-        setInterval(updateCountdown, 1000);
-
-        // 精选行程滚动效果
-        const itineraryContainer = document.getElementById('itinerary-container');
-        const itineraryCards = document.querySelectorAll('.itinerary-card');
-
-        if (itineraryContainer && itineraryCards) {
-            itineraryContainer.addEventListener('scroll', () => {
-                const containerCenter = itineraryContainer.scrollLeft + itineraryContainer.offsetWidth / 2;
                 
-                itineraryCards.forEach(card => {
-                    const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-                    const distance = Math.abs(containerCenter - cardCenter);
-                    const maxDistance = itineraryContainer.offsetWidth / 2;
-                    const scale = 1 - (distance / maxDistance) * 0.1;
-                    const opacity = 1 - (distance / maxDistance) * 0.5;
+                seconds.textContent = s.toString().padStart(2, '0');
+                minutes.textContent = m.toString().padStart(2, '0');
+                hours.textContent = h.toString().padStart(2, '0');
+                days.textContent = d.toString().padStart(2, '0');
+            }
+
+            setInterval(updateCountdown, 1000);
+
+            // 精选行程滚动效果
+            const itineraryContainer = document.getElementById('itinerary-container');
+            const itineraryCards = document.querySelectorAll('.itinerary-card');
+
+            if (itineraryContainer && itineraryCards) {
+                itineraryContainer.addEventListener('scroll', () => {
+                    const containerCenter = itineraryContainer.scrollLeft + itineraryContainer.offsetWidth / 2;
                     
-                    card.style.transform = `scale(${scale})`;
-                    card.style.opacity = opacity;
+                    itineraryCards.forEach(card => {
+                        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+                        const distance = Math.abs(containerCenter - cardCenter);
+                        const maxDistance = itineraryContainer.offsetWidth / 2;
+                        const scale = 1 - (distance / maxDistance) * 0.1;
+                        const opacity = 1 - (distance / maxDistance) * 0.5;
+                        
+                        card.style.transform = `scale(${scale})`;
+                        card.style.opacity = opacity;
+                    });
+                });
+            }
+
+            // 筛选按钮
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-primary', 'text-white');
+                        b.classList.add('bg-neutral-200', 'text-neutral-400');
+                    });
+                    btn.classList.add('active', 'bg-primary', 'text-white');
+                    btn.classList.remove('bg-neutral-200', 'text-neutral-400');
                 });
             });
-        }
 
-        // 筛选按钮
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => {
-                    b.classList.remove('active', 'bg-primary', 'text-white');
-                    b.classList.add('bg-neutral-200', 'text-neutral-400');
+            // 评价轮播
+            const testimonials = document.getElementById('testimonials');
+            const dots = document.querySelectorAll('[data-index]');
+            let currentIndex = 0;
+            const totalSlides = dots.length;
+
+            function goToSlide(index) {
+                currentIndex = index;
+                testimonials.style.transform = `translateX(-${currentIndex * 100}%)`;
+                dots.forEach((dot, i) => {
+                    if (i === currentIndex) {
+                        dot.classList.remove('bg-primary/30');
+                        dot.classList.add('bg-primary');
+                    } else {
+                        dot.classList.add('bg-primary/30');
+                        dot.classList.remove('bg-primary');
+                    }
                 });
-                btn.classList.add('active', 'bg-primary', 'text-white');
-                btn.classList.remove('bg-neutral-200', 'text-neutral-400');
-            });
-        });
+            }
 
-        // 评价轮播
-        const testimonials = document.getElementById('testimonials');
-        const dots = document.querySelectorAll('[data-index]');
-        let currentIndex = 0;
-        const totalSlides = dots.length;
-
-        function goToSlide(index) {
-            currentIndex = index;
-            testimonials.style.transform = `translateX(-${currentIndex * 100}%)`;
-            dots.forEach((dot, i) => {
-                if (i === currentIndex) {
-                    dot.classList.remove('bg-primary/30');
-                    dot.classList.add('bg-primary');
-                } else {
-                    dot.classList.add('bg-primary/30');
-                    dot.classList.remove('bg-primary');
-                }
-            });
-        }
-
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                goToSlide(parseInt(dot.dataset.index));
-            });
-        });
-
-        // 自动轮播
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            goToSlide(currentIndex);
-        }, 5000);
-
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+            dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    goToSlide(parseInt(dot.dataset.index));
                 });
             });
-        });
 
-        // 页面加载完成后初始化打字机
-        window.addEventListener('load', () => {
+            // 自动轮播
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                goToSlide(currentIndex);
+            }, 5000);
+
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // 页面加载完成后初始化打字机
             const title = document.getElementById('hero-title');
             typeWriter(title, 'Мир ждет, чтобы вы его исследовали');
         });
