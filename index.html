@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scenic Tourism · 沉浸式轻奢文旅官网</title>
-    <!-- 所有资源均为HTTPS，适配GitHub Pages，无混合内容问题 -->
+    <title>Scenic Tourism · Иммерсивный премиальный туристический сайт</title>
+    <!-- 所有资源均为HTTPS，适配GitHub Pages -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- 360全景库，CDN稳定可用 -->
+    <!-- 360全景库 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@5/dist/index.min.css">
     <script src="https://cdn.jsdelivr.net/npm/photo-sphere-viewer@5/dist/index.min.js"></script>
     
@@ -80,6 +80,8 @@
         body {
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
         .swiper-slide {
             width: auto;
@@ -87,7 +89,7 @@
         /* 全景容器 */
         #pano {
             width: 100%;
-            height: 100vh;
+            height: calc(100vh - 32px); /* 去掉顶部空白，适配顶部信息栏 */
         }
         .psv-hotspot {
             transition: transform 0.3s ease;
@@ -122,19 +124,26 @@
     </style>
 </head>
 <body class="bg-white">
+    <!-- 顶部制作人信息栏（新增，去掉顶部空白） -->
+    <div class="w-full bg-forest text-white text-xs md:text-sm py-1.5 px-4 text-center">
+        Разработчики: <span class="font-medium">Ци Жолань</span>, <span class="font-medium">Суй Вэньсинь</span>, <span class="font-medium">Тао Жуй</span> 
+        <span class="mx-2">|</span>
+        Группа: <span class="font-medium">Б1125-38.03.01ин (6)</span>
+    </div>
+
     <!-- 导航栏 -->
-    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4">
+    <nav id="navbar" class="fixed top-8 left-0 w-full z-50 transition-all duration-300 py-4">
         <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
             <a href="#home" class="text-white text-2xl font-bold tracking-wider">Scenic Tourism</a>
             
-            <!-- 桌面端导航 -->
+            <!-- 桌面端导航（俄语） -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#home" class="text-white/90 hover:text-white transition-colors">首页</a>
-                <a href="#map" class="text-white/90 hover:text-white transition-colors">景点导览</a>
-                <a href="#route" class="text-white/90 hover:text-white transition-colors">智能路线</a>
-                <a href="#gallery" class="text-white/90 hover:text-white transition-colors">景区风光</a>
-                <a href="#food" class="text-white/90 hover:text-white transition-colors">食宿配套</a>
-                <a href="#book" class="text-white/90 hover:text-white transition-colors">预约咨询</a>
+                <a href="#home" class="text-white/90 hover:text-white transition-colors">Главная</a>
+                <a href="#map" class="text-white/90 hover:text-white transition-colors">Достопримечательности</a>
+                <a href="#route" class="text-white/90 hover:text-white transition-colors">Интеллектуальный маршрут</a>
+                <a href="#gallery" class="text-white/90 hover:text-white transition-colors">Пейзажи парка</a>
+                <a href="#food" class="text-white/90 hover:text-white transition-colors">Проживание и питание</a>
+                <a href="#book" class="text-white/90 hover:text-white transition-colors">Бронирование</a>
             </div>
             
             <!-- 移动端汉堡按钮 -->
@@ -150,17 +159,17 @@
             <i class="fa fa-times"></i>
         </button>
         <div class="mt-12 flex flex-col space-y-6">
-            <a href="#home" class="text-white text-lg">首页</a>
-            <a href="#map" class="text-white text-lg">景点导览</a>
-            <a href="#route" class="text-white text-lg">智能路线</a>
-            <a href="#gallery" class="text-white text-lg">景区风光</a>
-            <a href="#food" class="text-white text-lg">食宿配套</a>
-            <a href="#book" class="text-white text-lg">预约咨询</a>
+            <a href="#home" class="text-white text-lg">Главная</a>
+            <a href="#map" class="text-white text-lg">Достопримечательности</a>
+            <a href="#route" class="text-white text-lg">Интеллектуальный маршрут</a>
+            <a href="#gallery" class="text-white text-lg">Пейзажи парка</a>
+            <a href="#food" class="text-white text-lg">Проживание и питание</a>
+            <a href="#book" class="text-white text-lg">Бронирование</a>
         </div>
     </div>
     
     <!-- 首页Banner - 360全景 -->
-    <section id="home" class="relative h-screen">
+    <section id="home" class="relative">
         <div id="pano"></div>
         
         <!-- AI语音导游按钮 -->
@@ -170,7 +179,7 @@
         
         <!-- 四季切换控件 -->
         <div class="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-10 glass rounded-full px-6 py-3 flex items-center gap-4">
-            <span class="text-white text-sm">切换季节</span>
+            <span class="text-white text-sm">Переключить сезон</span>
             <div class="flex gap-2">
                 <button class="season-btn w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center hover:scale-110 transition-transform" data-season="spring">
                     <i class="fa fa-leaf"></i>
@@ -192,17 +201,17 @@
             <div class="flex items-center gap-4">
                 <div>
                     <div class="text-2xl font-bold" id="seasonTemp">25°C</div>
-                    <div class="text-xs text-white/70">平均温度</div>
+                    <div class="text-xs text-white/70">Средняя температура</div>
                 </div>
                 <div class="w-px h-10 bg-white/20"></div>
                 <div>
-                    <div class="text-sm" id="seasonClothes">短袖+防晒衣</div>
-                    <div class="text-xs text-white/70">推荐穿搭</div>
+                    <div class="text-sm" id="seasonClothes">Футболка + защитная одежда от солнца</div>
+                    <div class="text-xs text-white/70">Рекомендуемая одежда</div>
                 </div>
                 <div class="w-px h-10 bg-white/20"></div>
                 <div>
-                    <div class="text-sm" id="seasonRoute">夏季避暑路线</div>
-                    <div class="text-xs text-white/70">推荐路线</div>
+                    <div class="text-sm" id="seasonRoute">Летний маршрут от жары</div>
+                    <div class="text-xs text-white/70">Рекомендуемый маршрут</div>
                 </div>
             </div>
         </div>
@@ -218,22 +227,22 @@
             <div class="glass rounded-2xl p-6 text-center fade-in">
                 <div class="text-golden text-3xl mb-2"><i class="fa fa-users"></i></div>
                 <div class="counter text-3xl md:text-4xl font-bold text-white" data-target="128">0</div>
-                <div class="text-white/70 text-sm mt-1">万+游玩人次</div>
+                <div class="text-white/70 text-sm mt-1">тыс. посетителей</div>
             </div>
             <div class="glass rounded-2xl p-6 text-center fade-in">
                 <div class="text-golden text-3xl mb-2"><i class="fa fa-signal"></i></div>
-                <div class="text-3xl md:text-4xl font-bold text-white crowd-low">舒适</div>
-                <div class="text-white/70 text-sm mt-1">实时客流</div>
+                <div class="text-3xl md:text-4xl font-bold text-white crowd-low">Комфортно</div>
+                <div class="text-white/70 text-sm mt-1">Текущая загруженность</div>
             </div>
             <div class="glass rounded-2xl p-6 text-center fade-in">
                 <div class="text-golden text-3xl mb-2"><i class="fa fa-sun-o"></i></div>
                 <div class="text-3xl md:text-4xl font-bold text-white">18°C</div>
-                <div class="text-white/70 text-sm mt-1">今日天气</div>
+                <div class="text-white/70 text-sm mt-1">Погода сегодня</div>
             </div>
             <div class="glass rounded-2xl p-6 text-center fade-in">
                 <div class="text-golden text-3xl mb-2"><i class="fa fa-map-marker"></i></div>
                 <div class="counter text-3xl md:text-4xl font-bold text-white" data-target="36">0</div>
-                <div class="text-white/70 text-sm mt-1">处特色景观</div>
+                <div class="text-white/70 text-sm mt-1">достопримечательностей</div>
             </div>
         </div>
     </section>
@@ -242,12 +251,12 @@
     <section id="map" class="py-20 md:py-32 bg-white">
         <div class="container mx-auto px-4 md:px-8">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">景点导览地图</h2>
-                <p class="text-text-gray max-w-2xl mx-auto">点击地图上的标记，查看景点详情，收藏你想去的地方</p>
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">Карта достопримечательностей</h2>
+                <p class="text-text-gray max-w-2xl mx-auto">Нажмите на метку на карте, чтобы увидеть детали, добавьте в избранное места, которые хотите посетить</p>
             </div>
             
             <div class="relative bg-gray-100 rounded-3xl overflow-hidden shadow-xl fade-in">
-                <img src="https://aka.doubaocdn.com/s/zXuV1wXtDZ" alt="景区地图" class="w-full h-auto">
+                <img src="https://aka.doubaocdn.com/s/zXuV1wXtDZ" alt="Карта парка" class="w-full h-auto">
                 
                 <!-- 地图标记 -->
                 <button class="absolute top-1/4 left-1/3 w-8 h-8 bg-forest rounded-full text-white flex items-center justify-center hover:scale-125 transition-transform spot-marker" data-spot="moonbay">
@@ -266,7 +275,7 @@
                 <!-- 收藏按钮 -->
                 <button id="collectBtn" class="absolute top-4 right-4 glass rounded-full px-4 py-2 text-dark-bg text-sm flex items-center gap-2">
                     <i class="fa fa-heart-o"></i>
-                    <span>已收藏 0 个景点</span>
+                    <span>В избранном: 0 мест</span>
                 </button>
             </div>
             
@@ -286,7 +295,7 @@
                             <span id="spotModalTime"></span>
                         </div>
                         <button id="collectSpotBtn" class="px-4 py-2 bg-forest rounded-full text-white text-sm">
-                            <i class="fa fa-heart-o mr-1"></i>收藏
+                            <i class="fa fa-heart-o mr-1"></i>Добавить в избранное
                         </button>
                     </div>
                 </div>
@@ -298,50 +307,50 @@
     <section id="route" class="py-20 md:py-32 bg-dark-bg">
         <div class="container mx-auto px-4 md:px-8">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-white mb-4">智能路线生成</h2>
-                <p class="text-white/70 max-w-2xl mx-auto">选择你的出行类型，一键生成专属游玩路线</p>
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-white mb-4">Интеллектуальный генератор маршрутов</h2>
+                <p class="text-white/70 max-w-2xl mx-auto">Выберите тип вашей поездки, чтобы получить персональный маршрут</p>
             </div>
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <!-- 选择面板 -->
                 <div class="glass rounded-3xl p-8 fade-in">
-                    <h3 class="text-xl font-bold text-white mb-6">选择你的出行类型</h3>
+                    <h3 class="text-xl font-bold text-white mb-6">Выберите тип поездки</h3>
                     
                     <div class="grid grid-cols-2 gap-4 mb-8">
                         <button class="route-type-btn p-4 rounded-xl bg-white/10 text-white hover:bg-forest transition-colors text-left" data-type="family">
                             <i class="fa fa-child text-2xl mb-2 block"></i>
-                            <span class="font-medium">亲子游</span>
-                            <p class="text-xs text-white/70 mt-1">轻松有趣，寓教于乐</p>
+                            <span class="font-medium">Семейный тур</span>
+                            <p class="text-xs text-white/70 mt-1">Легко и весело, обучение через игру</p>
                         </button>
                         <button class="route-type-btn p-4 rounded-xl bg-white/10 text-white hover:bg-forest transition-colors text-left" data-type="couple">
                             <i class="fa fa-heart text-2xl mb-2 block"></i>
-                            <span class="font-medium">情侣游</span>
-                            <p class="text-xs text-white/70 mt-1">浪漫打卡，二人世界</p>
+                            <span class="font-medium">Романтический тур</span>
+                            <p class="text-xs text-white/70 mt-1">Романтические фото, время для двоих</p>
                         </button>
                         <button class="route-type-btn p-4 rounded-xl bg-white/10 text-white hover:bg-forest transition-colors text-left" data-type="elder">
                             <i class="fa fa-wheelchair text-2xl mb-2 block"></i>
-                            <span class="font-medium">老人游</span>
-                            <p class="text-xs text-white/70 mt-1">平缓舒适，慢节奏</p>
+                            <span class="font-medium">Тур для пожилых</span>
+                            <p class="text-xs text-white/70 mt-1">Спокойно и комфортно, медленный темп</p>
                         </button>
                         <button class="route-type-btn p-4 rounded-xl bg-white/10 text-white hover:bg-forest transition-colors text-left" data-type="hiking">
                             <i class="fa fa-hiking text-2xl mb-2 block"></i>
-                            <span class="font-medium">徒步探险</span>
-                            <p class="text-xs text-white/70 mt-1">挑战自我，探索秘境</p>
+                            <span class="font-medium">Пеший поход</span>
+                            <p class="text-xs text-white/70 mt-1">Испытание себя, исследование тайн</p>
                         </button>
                         <button class="route-type-btn p-4 rounded-xl bg-white/10 text-white hover:bg-forest transition-colors text-left" data-type="photo">
                             <i class="fa fa-camera text-2xl mb-2 block"></i>
-                            <span class="font-medium">摄影采风</span>
-                            <p class="text-xs text-white/70 mt-1">最佳机位，出片圣地</p>
+                            <span class="font-medium">Фототур</span>
+                            <p class="text-xs text-white/70 mt-1">Лучшие ракурсы, идеальные фото</p>
                         </button>
                         <button class="route-type-btn p-4 rounded-xl bg-white/10 text-white hover:bg-forest transition-colors text-left" data-type="food">
                             <i class="fa fa-cutlery text-2xl mb-2 block"></i>
-                            <span class="font-medium">美食之旅</span>
-                            <p class="text-xs text-white/70 mt-1">吃遍当地，舌尖体验</p>
+                            <span class="font-medium">Гастрономический тур</span>
+                            <p class="text-xs text-white/70 mt-1">Попробуйте местную кухню</p>
                         </button>
                     </div>
                     
                     <button id="generateRouteBtn" class="w-full py-4 bg-forest text-white rounded-xl hover:bg-forest/90 transition-colors font-medium disabled:opacity-50" disabled>
-                        生成专属路线
+                        Сгенерировать персональный маршрут
                     </button>
                 </div>
                 
@@ -349,13 +358,13 @@
                 <div class="glass rounded-3xl p-8 fade-in" id="routeResult">
                     <div class="text-center text-white/70 py-12" id="routeEmpty">
                         <i class="fa fa-map-o text-4xl mb-4 block"></i>
-                        <p>选择出行类型，生成你的专属路线</p>
+                        <p>Выберите тип поездки, чтобы получить персональный маршрут</p>
                     </div>
                     <div class="hidden" id="routeContent">
                         <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-xl font-bold text-white" id="routeTitle">你的专属路线</h3>
+                            <h3 class="text-xl font-bold text-white" id="routeTitle">Ваш персональный маршрут</h3>
                             <button class="text-golden text-sm">
-                                <i class="fa fa-download mr-1"></i>保存路线
+                                <i class="fa fa-download mr-1"></i>Сохранить маршрут
                             </button>
                         </div>
                         
@@ -364,8 +373,8 @@
                         </div>
                         
                         <div class="mt-6 pt-6 border-t border-white/10 flex justify-between text-white/70 text-sm">
-                            <div><i class="fa fa-clock-o mr-1"></i>总耗时: <span id="routeDuration"></span></div>
-                            <div><i class="fa fa-road mr-1"></i>总里程: <span id="routeDistance"></span></div>
+                            <div><i class="fa fa-clock-o mr-1"></i>Общее время: <span id="routeDuration"></span></div>
+                            <div><i class="fa fa-road mr-1"></i>Общее расстояние: <span id="routeDistance"></span></div>
                         </div>
                     </div>
                 </div>
@@ -377,67 +386,67 @@
     <section id="gallery" class="py-20 md:py-32 bg-white">
         <div class="container mx-auto px-4 md:px-8">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">景区风光</h2>
-                <p class="text-text-gray max-w-2xl mx-auto">鼠标悬停图片，体验3D立体悬浮效果</p>
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">Пейзажи парка</h2>
+                <p class="text-text-gray max-w-2xl mx-auto">Наведите курсор на фото, чтобы увидеть 3D эффект парения</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/zXuV1wXtDZ" alt="山水风光" class="w-full h-64 object-cover">
+                        <img src="https://aka.doubaocdn.com/s/zXuV1wXtDZ" alt="Горный пейзаж" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
-                            <h4 class="font-bold text-dark-bg">阳朔山水</h4>
-                            <p class="text-text-gray text-sm">甲天下的山水画卷</p>
+                            <h4 class="font-bold text-dark-bg">Горы Яншо</h4>
+                            <p class="text-text-gray text-sm">Лучший пейзаж под небом</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/k1cw1wXtDZ" alt="月亮湾" class="w-full h-64 object-cover">
+                        <img src="https://aka.doubaocdn.com/s/k1cw1wXtDZ" alt="Бухта Луны" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
-                            <h4 class="font-bold text-dark-bg">喀纳斯月亮湾</h4>
-                            <p class="text-text-gray text-sm">蜿蜒的蓝色绸带</p>
+                            <h4 class="font-bold text-dark-bg">Бухта Луны в Канасе</h4>
+                            <p class="text-text-gray text-sm">Извилистая голубая лента</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tilt-container fade-in" data-tilt">
+                    <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
+                        <img src="https://aka.doubaocdn.com/s/AdhH1wXtDe" alt="Горные цветы" class="w-full h-64 object-cover">
+                        <div class="p-4 bg-white">
+                            <h4 class="font-bold text-dark-bg">Горные цветы</h4>
+                            <p class="text-text-gray text-sm">Дикие цветы по всему склону</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/AdhH1wXtDe" alt="花海" class="w-full h-64 object-cover">
+                        <img src="https://aka.doubaocdn.com/s/iDzM1wXtDe" alt="Осенний лес" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
-                            <h4 class="font-bold text-dark-bg">高山花海</h4>
-                            <p class="text-text-gray text-sm">漫山遍野的野花</p>
+                            <h4 class="font-bold text-dark-bg">Осенний лес</h4>
+                            <p class="text-text-gray text-sm">Сезон, когда лес окрашивается в разные цвета</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/iDzM1wXtDe" alt="秋景" class="w-full h-64 object-cover">
+                        <img src="https://aka.doubaocdn.com/s/JGKR1wXtDi" alt="Гостевой дом" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
-                            <h4 class="font-bold text-dark-bg">秋日山林</h4>
-                            <p class="text-text-gray text-sm">层林尽染的季节</p>
+                            <h4 class="font-bold text-dark-bg">Гостевой дом в горах</h4>
+                            <p class="text-text-gray text-sm">Жилье, скрытое в горах</p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="tilt-container fade-in" data-tilt>
                     <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/JGKR1wXtDi" alt="民宿" class="w-full h-64 object-cover">
+                        <img src="https://aka.doubaocdn.com/s/iSBB1wXtDm" alt="Местная еда" class="w-full h-64 object-cover">
                         <div class="p-4 bg-white">
-                            <h4 class="font-bold text-dark-bg">山间民宿</h4>
-                            <p class="text-text-gray text-sm">隐于山林的居所</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tilt-container fade-in" data-tilt>
-                    <div class="tilt-card rounded-2xl overflow-hidden shadow-xl">
-                        <img src="https://aka.doubaocdn.com/s/iSBB1wXtDm" alt="美食" class="w-full h-64 object-cover">
-                        <div class="p-4 bg-white">
-                            <h4 class="font-bold text-dark-bg">特色美食</h4>
-                            <p class="text-text-gray text-sm">地道的山野风味</p>
+                            <h4 class="font-bold text-dark-bg">Местная кухня</h4>
+                            <p class="text-text-gray text-sm">Настоящие горные деликатесы</p>
                         </div>
                     </div>
                 </div>
@@ -449,28 +458,28 @@
     <section id="food" class="py-20 md:py-32 bg-gray-50">
         <div class="container mx-auto px-4 md:px-8">
             <div class="text-center mb-16 fade-in">
-                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">食宿配套</h2>
-                <p class="text-text-gray max-w-2xl mx-auto">住山间民宿，品地道美食，享受最纯粹的度假体验</p>
+                <h2 class="text-[clamp(1.8rem,4vw,3rem)] font-bold text-dark-bg mb-4">Проживание и питание</h2>
+                <p class="text-text-gray max-w-2xl mx-auto">Живите в горном гостевом доме, пробуйте местную кухню, наслаждайтесь чистым отдыхом</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- 民宿 -->
                 <div>
-                    <h3 class="text-2xl font-bold text-dark-bg mb-6 fade-in">精品民宿</h3>
+                    <h3 class="text-2xl font-bold text-dark-bg mb-6 fade-in">Премиум гостевые дома</h3>
                     <div class="space-y-6">
                         <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
                             <div class="flex">
                                 <div class="w-1/3 img-hover-zoom">
-                                    <img src="https://aka.doubaocdn.com/s/JGKR1wXtDi" alt="泳池民宿" class="w-full h-full object-cover">
+                                    <img src="https://aka.doubaocdn.com/s/JGKR1wXtDi" alt="Вилла с бассейном" class="w-full h-full object-cover">
                                 </div>
                                 <div class="w-2/3 p-5">
                                     <div class="flex justify-between items-start">
-                                        <h4 class="font-bold text-dark-bg">山景泳池别墅</h4>
-                                        <span class="text-golden font-bold">¥1280/晚</span>
+                                        <h4 class="font-bold text-dark-bg">Вилла с бассейном и видом на горы</h4>
+                                        <span class="text-golden font-bold">¥1280/ночь</span>
                                     </div>
-                                    <p class="text-text-gray text-sm mt-2">独立泳池，山景露台，24小时管家服务</p>
+                                    <p class="text-text-gray text-sm mt-2">Отдельный бассейн, терраса с видом на горы, 24-часовой дворецкий</p>
                                     <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button class="text-forest text-sm font-medium">立即预约</button>
+                                        <button class="text-forest text-sm font-medium">Забронировать</button>
                                     </div>
                                 </div>
                             </div>
@@ -479,16 +488,16 @@
                         <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
                             <div class="flex">
                                 <div class="w-1/3 img-hover-zoom">
-                                    <img src="https://aka.doubaocdn.com/s/7CL01wXtDi" alt="古风民宿" class="w-full h-full object-cover">
+                                    <img src="https://aka.doubaocdn.com/s/7CL01wXtDi" alt="Традиционный двор" class="w-full h-full object-cover">
                                 </div>
                                 <div class="w-2/3 p-5">
                                     <div class="flex justify-between items-start">
-                                        <h4 class="font-bold text-dark-bg">古风庭院民宿</h4>
-                                        <span class="text-golden font-bold">¥680/晚</span>
+                                        <h4 class="font-bold text-dark-bg">Традиционный двор в китайском стиле</h4>
+                                        <span class="text-golden font-bold">¥680/ночь</span>
                                     </div>
-                                    <p class="text-text-gray text-sm mt-2">中式庭院，古色古香，体验慢生活</p>
+                                    <p class="text-text-gray text-sm mt-2">Китайский двор, традиционный стиль, медленный отдых</p>
                                     <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button class="text-forest text-sm font-medium">立即预约</button>
+                                        <button class="text-forest text-sm font-medium">Забронировать</button>
                                     </div>
                                 </div>
                             </div>
@@ -498,21 +507,21 @@
                 
                 <!-- 美食 -->
                 <div>
-                    <h3 class="text-2xl font-bold text-dark-bg mb-6 fade-in">特色美食</h3>
+                    <h3 class="text-2xl font-bold text-dark-bg mb-6 fade-in">Местная кухня</h3>
                     <div class="space-y-6">
                         <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
                             <div class="flex">
                                 <div class="w-1/3 img-hover-zoom">
-                                    <img src="https://aka.doubaocdn.com/s/iSBB1wXtDm" alt="手抓饭" class="w-full h-full object-cover">
+                                    <img src="https://aka.doubaocdn.com/s/iSBB1wXtDm" alt="Плов" class="w-full h-full object-cover">
                                 </div>
                                 <div class="w-2/3 p-5">
                                     <div class="flex justify-between items-start">
-                                        <h4 class="font-bold text-dark-bg">草原手抓饭</h4>
-                                        <span class="text-golden font-bold">¥68/份</span>
+                                        <h4 class="font-bold text-dark-bg">Степной плов</h4>
+                                        <span class="text-golden font-bold">¥68/порция</span>
                                     </div>
-                                    <p class="text-text-gray text-sm mt-2">正宗本地做法，羊肉鲜嫩，米饭飘香</p>
+                                    <p class="text-text-gray text-sm mt-2">Настоящий местный рецепт, нежное мясо, ароматный рис</p>
                                     <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button class="text-forest text-sm font-medium">提前预订</button>
+                                        <button class="text-forest text-sm font-medium">Предзаказ</button>
                                     </div>
                                 </div>
                             </div>
@@ -521,16 +530,16 @@
                         <div class="bg-white rounded-2xl overflow-hidden shadow-lg group hover:shadow-xl transition-all fade-in">
                             <div class="flex">
                                 <div class="w-1/3 img-hover-zoom">
-                                    <img src="https://aka.doubaocdn.com/s/Vhgj1wXtDm" alt="蛋炒饭" class="w-full h-full object-cover">
+                                    <img src="https://aka.doubaocdn.com/s/Vhgj1wXtDm" alt="Рис с яйцом" class="w-full h-full object-cover">
                                 </div>
                                 <div class="w-2/3 p-5">
                                     <div class="flex justify-between items-start">
-                                        <h4 class="font-bold text-dark-bg">农家蛋炒饭</h4>
-                                        <span class="text-golden font-bold">¥28/份</span>
+                                        <h4 class="font-bold text-dark-bg">Фермерский рис с яйцом</h4>
+                                        <span class="text-golden font-bold">¥28/порция</span>
                                     </div>
-                                    <p class="text-text-gray text-sm mt-2">本地土鸡蛋，柴火炒制，童年的味道</p>
+                                    <p class="text-text-gray text-sm mt-2">Местные фермерские яйца, приготовленный на огне, вкус детства</p>
                                     <div class="mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <button class="text-forest text-sm font-medium">提前预订</button>
+                                        <button class="text-forest text-sm font-medium">Предзаказ</button>
                                     </div>
                                 </div>
                             </div>
@@ -541,54 +550,54 @@
             
             <!-- 游客留言墙 -->
             <div class="mt-16 glass-dark rounded-3xl p-8 overflow-hidden h-48 fade-in">
-                <h3 class="text-xl font-bold text-white mb-4">游客实时留言</h3>
+                <h3 class="text-xl font-bold text-white mb-4">Реальные отзывы туристов</h3>
                 <div class="message-wall">
                     <div class="flex gap-4 mb-4">
-                        <div class="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-white">张</div>
+                        <div class="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-white">Ч</div>
                         <div>
-                            <div class="text-white">风景太美了！下次还来！</div>
-                            <div class="text-white/50 text-xs">2分钟前</div>
+                            <div class="text-white">Пейзаж невероятный! Приеду еще раз!</div>
+                            <div class="text-white/50 text-xs">2 минуты назад</div>
                         </div>
                         <div class="text-golden">😆</div>
                     </div>
                     <div class="flex gap-4 mb-4">
-                        <div class="w-10 h-10 rounded-full bg-golden flex items-center justify-center text-white">李</div>
+                        <div class="w-10 h-10 rounded-full bg-golden flex items-center justify-center text-white">С</div>
                         <div>
-                            <div class="text-white">民宿的老板人超好，菜也好吃！</div>
-                            <div class="text-white/50 text-xs">5分钟前</div>
+                            <div class="text-white">Хозяин гостевого дома очень добрый, еда вкусная!</div>
+                            <div class="text-white/50 text-xs">5 минут назад</div>
                         </div>
                         <div class="text-golden">👍</div>
                     </div>
                     <div class="flex gap-4 mb-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white">王</div>
+                        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white">Т</div>
                         <div>
-                            <div class="text-white">360全景太震撼了，已经预约了周末去！</div>
-                            <div class="text-white/50 text-xs">8分钟前</div>
+                            <div class="text-white">360 панорама потрясающая, уже забронировал выходные!</div>
+                            <div class="text-white/50 text-xs">8 минут назад</div>
                         </div>
                         <div class="text-golden">😍</div>
                     </div>
                     <!-- 重复用来滚动 -->
                     <div class="flex gap-4 mb-4">
-                        <div class="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-white">张</div>
+                        <div class="w-10 h-10 rounded-full bg-forest flex items-center justify-center text-white">Ч</div>
                         <div>
-                            <div class="text-white">风景太美了！下次还来！</div>
-                            <div class="text-white/50 text-xs">2分钟前</div>
+                            <div class="text-white">Пейзаж невероятный! Приеду еще раз!</div>
+                            <div class="text-white/50 text-xs">2 минуты назад</div>
                         </div>
                         <div class="text-golden">😆</div>
                     </div>
                     <div class="flex gap-4 mb-4">
-                        <div class="w-10 h-10 rounded-full bg-golden flex items-center justify-center text-white">李</div>
+                        <div class="w-10 h-10 rounded-full bg-golden flex items-center justify-center text-white">С</div>
                         <div>
-                            <div class="text-white">民宿的老板人超好，菜也好吃！</div>
-                            <div class="text-white/50 text-xs">5分钟前</div>
+                            <div class="text-white">Хозяин гостевого дома очень добрый, еда вкусная!</div>
+                            <div class="text-white/50 text-xs">5 минут назад</div>
                         </div>
                         <div class="text-golden">👍</div>
                     </div>
                     <div class="flex gap-4 mb-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white">王</div>
+                        <div class="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white">Т</div>
                         <div>
-                            <div class="text-white">360全景太震撼了，已经预约了周末去！</div>
-                            <div class="text-white/50 text-xs">8分钟前</div>
+                            <div class="text-white">360 панорама потрясающая, уже забронировал выходные!</div>
+                            <div class="text-white/50 text-xs">8 минут назад</div>
                         </div>
                         <div class="text-golden">😍</div>
                     </div>
@@ -603,65 +612,65 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <!-- 预约表单 -->
                 <div class="glass rounded-3xl p-8 fade-in">
-                    <h3 class="text-2xl font-bold text-white mb-6">在线预约</h3>
+                    <h3 class="text-2xl font-bold text-white mb-6">Онлайн бронирование</h3>
                     <form class="space-y-5">
                         <div>
-                            <label class="block text-white/80 text-sm mb-2">姓名</label>
-                            <input type="text" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors" placeholder="请输入您的姓名">
+                            <label class="block text-white/80 text-sm mb-2">Имя</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors" placeholder="Введите ваше имя">
                         </div>
                         <div>
-                            <label class="block text-white/80 text-sm mb-2">出行日期</label>
+                            <label class="block text-white/80 text-sm mb-2">Дата поездки</label>
                             <input type="date" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-forest transition-colors">
                         </div>
                         <div>
-                            <label class="block text-white/80 text-sm mb-2">出行人数</label>
+                            <label class="block text-white/80 text-sm mb-2">Количество человек</label>
                             <select class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-forest transition-colors">
-                                <option value="1">1人</option>
-                                <option value="2">2人</option>
-                                <option value="3">3人</option>
-                                <option value="4">4人</option>
-                                <option value="5+">5人以上</option>
+                                <option value="1">1 человек</option>
+                                <option value="2">2 человека</option>
+                                <option value="3">3 человека</option>
+                                <option value="4">4 человека</option>
+                                <option value="5+">5+ человек</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-white/80 text-sm mb-2">联系方式</label>
-                            <input type="tel" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors" placeholder="请输入您的手机号">
+                            <label class="block text-white/80 text-sm mb-2">Контактный телефон</label>
+                            <input type="tel" class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors" placeholder="Введите ваш телефон">
                         </div>
                         <div>
-                            <label class="block text-white/80 text-sm mb-2">备注需求</label>
-                            <textarea class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors h-24 resize-none" placeholder="如有特殊需求，请在此说明"></textarea>
+                            <label class="block text-white/80 text-sm mb-2">Особые пожелания</label>
+                            <textarea class="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors h-24 resize-none" placeholder="Если есть особые пожелания, напишите здесь"></textarea>
                         </div>
                         <button type="submit" class="w-full py-4 bg-forest text-white rounded-xl hover:bg-forest/90 transition-colors font-medium">
-                            提交预约申请
+                            Отправить заявку на бронирование
                         </button>
                     </form>
                 </div>
                 
                 <!-- 智能客服 -->
                 <div class="glass rounded-3xl p-8 fade-in">
-                    <h3 class="text-2xl font-bold text-white mb-6">智能客服</h3>
+                    <h3 class="text-2xl font-bold text-white mb-6">Интеллектуальный консультант</h3>
                     
                     <div class="h-80 overflow-y-auto mb-4 space-y-4" id="chatMessages">
                         <div class="flex gap-3">
                             <div class="w-8 h-8 rounded-full bg-forest flex items-center justify-center text-white text-sm">AI</div>
                             <div class="bg-white/10 rounded-2xl rounded-tl-none px-4 py-2 text-white text-sm max-w-[80%]">
-                                您好！我是Scenic Tourism的智能客服，有什么可以帮您的？
+                                Здравствуйте! Я интеллектуальный консультант Scenic Tourism, чем я могу вам помочь?
                             </div>
                         </div>
                     </div>
                     
                     <div class="flex gap-2">
-                        <input type="text" id="chatInput" class="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors" placeholder="输入您的问题...">
+                        <input type="text" id="chatInput" class="flex-1 px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:border-forest transition-colors" placeholder="Введите ваш вопрос...">
                         <button id="sendChat" class="px-6 py-3 bg-forest text-white rounded-xl hover:bg-forest/90 transition-colors">
                             <i class="fa fa-paper-plane"></i>
                         </button>
                     </div>
                     
                     <div class="mt-4 flex flex-wrap gap-2">
-                        <button class="chat-quick-btn px-3 py-1 bg-white/10 rounded-full text-white/70 text-xs hover:bg-white/20 transition-colors">门票多少钱？</button>
-                        <button class="chat-quick-btn px-3 py-1 bg-white/10 rounded-full text-white/70 text-xs hover:bg-white/20 transition-colors">开放时间？</button>
-                        <button class="chat-quick-btn px-3 py-1 bg-white/10 rounded-full text-white/70 text-xs hover:bg-white/20 transition-colors">怎么去景区？</button>
-                        <button class="chat-quick-btn px-3 py-1 bg-white/10 rounded-full text-white/70 text-xs hover:bg-white/20 transition-colors">有停车场吗？</button>
+                        <button class="chat-quick-btn px-3 py-1 bg-white/10 rounded-full text-white/70 text-xs hover:bg-white/20 transition-colors">Сколько стоит билет?</button>
+                        <button class="chat-quick-btn px-3 py-1 bg-white/10 rounded-full text-white/70 text-xs hover:bg-white/20 transition-colors">Часы работы?</button>
+                        <button class="chat-quick-btn px-3 py-1 bg-white/10 rounded-full text-white/70 text-xs hover:bg-white/20 transition-colors">Как доехать?</button>
+                        <button class="chat-quick-btn px-3 py-1 bg-white/10 rounded-full text-white/70 text-xs hover:bg-white/20 transition-colors">Есть парковка?</button>
                     </div>
                 </div>
             </div>
@@ -673,7 +682,7 @@
         <div class="container mx-auto px-4 md:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="text-white/60 text-sm mb-4 md:mb-0">
-                    © 2026 Scenic Tourism 版权所有 | 沉浸式轻奢文旅目的地
+                    © 2026 Scenic Tourism. Все права защищены.
                 </div>
                 <div class="flex space-x-6">
                     <a href="#" class="text-white/60 hover:text-white transition-colors"><i class="fa fa-weixin text-xl"></i></a>
@@ -698,116 +707,116 @@
     </div>
     
     <script>
-        // 景点数据
+        // 景点数据（俄语）
         const spotsData = {
             moonbay: {
-                title: '喀纳斯月亮湾',
-                desc: '蜿蜒的河水如同蓝色的绸带，在森林间勾勒出完美的月牙形状。清晨的薄雾笼罩着河谷，仿佛置身于仙境之中。',
+                title: 'Бухта Луны в Канасе',
+                desc: 'Извилистая река, как голубая лента, рисует идеальную форму полумесяца среди леса. Утренний туман покрывает долину, как будто вы в сказке.',
                 img: 'https://aka.doubaocdn.com/s/k1cw1wXtDZ',
                 time: '08:00 - 18:00'
             },
             flower: {
-                title: '高山花海',
-                desc: '夏季的高山草甸，漫山遍野的野花竞相绽放，与远处的雪山形成鲜明的对比。',
+                title: 'Горные цветы',
+                desc: 'Летом на горных лугах дикие цветы расцветают повсюду, контрастируя с далекими снежными горами.',
                 img: 'https://aka.doubaocdn.com/s/AdhH1wXtDe',
                 time: '07:00 - 19:00'
             },
             ancient: {
-                title: '古驿道遗址',
-                desc: '千年古驿道穿越山林，见证了无数商旅的往来。斑驳的石板路，诉说着历史的沧桑。',
+                title: 'Древняя почтовая дорога',
+                desc: 'Тысячелетняя почтовая дорога пересекает горы, видела множество торговцев. Потертые камни рассказывают историю.',
                 img: 'https://aka.doubaocdn.com/s/iDzM1wXtDe',
-                time: '全天开放'
+                time: 'Круглосуточно'
             },
             hotspring: {
-                title: '山间温泉',
-                desc: '天然的温泉，富含多种矿物质，泡去一身的疲惫，享受山林间的宁静。',
+                title: 'Горячие источники в горах',
+                desc: 'Природные горячие источники, богатые минералами, снимают усталость, дарят спокойствие в горах.',
                 img: 'https://aka.doubaocdn.com/s/JGKR1wXtDi',
                 time: '10:00 - 22:00'
             }
         };
         
-        // 路线数据
+        // 路线数据（俄语）
         const routesData = {
             family: {
-                title: '亲子游专属路线',
-                duration: '1天',
-                distance: '8公里',
+                title: 'Персональный семейный маршрут',
+                duration: '1 день',
+                distance: '8 км',
                 steps: [
-                    { name: '游客中心', desc: '领取儿童讲解器', time: '09:00' },
-                    { name: '高山花海', desc: '认识植物，亲子互动', time: '09:30' },
-                    { name: '山间餐厅', desc: '品尝特色儿童餐', time: '12:00' },
-                    { name: '小动物园', desc: '与萌宠互动', time: '14:00' },
-                    { name: '亲子手工坊', desc: '制作纪念品', time: '15:30' }
+                    { name: 'Центр посетителей', desc: 'Получить детский аудиогид', time: '09:00' },
+                    { name: 'Горные цветы', desc: 'Изучать растения, семейные игры', time: '09:30' },
+                    { name: 'Горный ресторан', desc: 'Попробовать детское меню', time: '12:00' },
+                    { name: 'Маленький зоопарк', desc: 'Играть с животными', time: '14:00' },
+                    { name: 'Семейная мастерская', desc: 'Сделать сувенир', time: '15:30' }
                 ]
             },
             couple: {
-                title: '情侣浪漫路线',
-                duration: '2天',
-                distance: '15公里',
+                title: 'Романтический маршрут для пары',
+                duration: '2 дня',
+                distance: '15 км',
                 steps: [
-                    { name: '月亮湾观景台', desc: '打卡网红拍照点', time: '08:00' },
-                    { name: '云端栈道', desc: '牵手漫步云端', time: '10:00' },
-                    { name: '湖景餐厅', desc: '浪漫烛光晚餐', time: '18:00' },
-                    { name: '星空帐篷', desc: '夜晚看星星', time: '20:00' },
-                    { name: '日出观景台', desc: '一起看日出', time: '06:00' }
+                    { name: 'Смотровая площадка бухты Луны', desc: 'Сделать популярные фото', time: '08:00' },
+                    { name: 'Облачная тропа', desc: 'Гулять вместе в облаках', time: '10:00' },
+                    { name: 'Ресторан с видом на озеро', desc: 'Романтический ужин при свечах', time: '18:00' },
+                    { name: 'Звездная палатка', desc: 'Смотреть звезды ночью', time: '20:00' },
+                    { name: 'Смотровая площадка для рассвета', desc: 'Смотреть рассвет вместе', time: '06:00' }
                 ]
             },
             elder: {
-                title: '老人舒适路线',
-                duration: '1天',
-                distance: '5公里',
+                title: 'Комфортный маршрут для пожилых',
+                duration: '1 день',
+                distance: '5 км',
                 steps: [
-                    { name: '游客中心', desc: '乘坐观光车', time: '09:00' },
-                    { name: '平缓步道', desc: '轻松漫步山林', time: '09:30' },
-                    { name: '休息茶座', desc: '品山间清茶', time: '11:00' },
-                    { name: '特色餐厅', desc: '软烂适口的美食', time: '12:30' },
-                    { name: '民俗馆', desc: '了解当地文化', time: '14:30' }
+                    { name: 'Центр посетителей', desc: 'Сесть на экскурсионный автобус', time: '09:00' },
+                    { name: 'Легкая тропа', desc: 'Спокойно гулять в лесу', time: '09:30' },
+                    { name: 'Место для отдыха', desc: 'Попробовать горный чай', time: '11:00' },
+                    { name: 'Местный ресторан', desc: 'Мягкая и вкусная еда', time: '12:30' },
+                    { name: 'Музей культуры', desc: 'Узнать местную культуру', time: '14:30' }
                 ]
             },
             hiking: {
-                title: '徒步探险路线',
-                duration: '3天',
-                distance: '45公里',
+                title: 'Маршрут для пешего похода',
+                duration: '3 дня',
+                distance: '45 км',
                 steps: [
-                    { name: '徒步起点', desc: '整理装备出发', time: '07:00' },
-                    { name: '原始森林', desc: '穿越无人区', time: 'Day1' },
-                    { name: '山顶营地', desc: '露营看星空', time: 'Day1晚' },
-                    { name: '秘境瀑布', desc: '探索隐藏景点', time: 'Day2' },
-                    { name: '下山返程', desc: '满载回忆而归', time: 'Day3' }
+                    { name: 'Начало похода', desc: 'Подготовить снаряжение', time: '07:00' },
+                    { name: 'Древний лес', desc: 'Пройти через нетронутую зону', time: 'День1' },
+                    { name: 'Вершинный лагерь', desc: 'Кемпинг и смотреть звезды', time: 'Ночь Дня1' },
+                    { name: 'Скрытый водопад', desc: 'Исследовать скрытое место', time: 'День2' },
+                    { name: 'Спуск обратно', desc: 'Вернуться с воспоминаниями', time: 'День3' }
                 ]
             },
             photo: {
-                title: '摄影采风路线',
-                duration: '2天',
-                distance: '20公里',
+                title: 'Маршрут для фотографов',
+                duration: '2 дня',
+                distance: '20 км',
                 steps: [
-                    { name: '日出观景台', desc: '拍摄日出云海', time: '05:30' },
-                    { name: '月亮湾', desc: '拍摄S弯河流', time: '08:00' },
-                    { name: '花海', desc: '拍摄漫山野花', time: '10:00' },
-                    { name: '古镇', desc: '拍摄人文风情', time: '14:00' },
-                    { name: '星空', desc: '拍摄银河星空', time: '22:00' }
+                    { name: 'Смотровая площадка для рассвета', desc: 'Снять рассвет и облака', time: '05:30' },
+                    { name: 'Бухта Луны', desc: 'Снять извилистую реку', time: '08:00' },
+                    { name: 'Цветы', desc: 'Снять цветы на склоне', time: '10:00' },
+                    { name: 'Старый город', desc: 'Снять местную культуру', time: '14:00' },
+                    { name: 'Звезды', desc: 'Снять Млечный путь', time: '22:00' }
                 ]
             },
             food: {
-                title: '美食之旅路线',
-                duration: '1天',
-                distance: '10公里',
+                title: 'Гастрономический маршрут',
+                duration: '1 день',
+                distance: '10 км',
                 steps: [
-                    { name: '早餐店', desc: '本地特色早餐', time: '08:00' },
-                    { name: '农家菜馆', desc: '山野菜宴', time: '12:00' },
-                    { name: '小吃街', desc: '各种特色小吃', time: '15:00' },
-                    { name: '手工作坊', desc: '学习做当地美食', time: '16:00' },
-                    { name: '烧烤夜市', desc: '夜晚烧烤啤酒', time: '19:00' }
+                    { name: 'Завтрак', desc: 'Местный завтрак', time: '08:00' },
+                    { name: 'Фермерский ресторан', desc: 'Блюда из горных овощей', time: '12:00' },
+                    { name: 'Улица еды', desc: 'Разные местные закуски', time: '15:00' },
+                    { name: 'Мастерская еды', desc: 'Научиться готовить местную еду', time: '16:00' },
+                    { name: 'Ночной рынок', desc: 'Шашлыки и пиво ночью', time: '19:00' }
                 ]
             }
         };
         
-        // 季节数据
+        // 季节数据（俄语）
         const seasonData = {
-            spring: { temp: '18°C', clothes: '薄外套+长裤', route: '春季踏青路线' },
-            summer: { temp: '25°C', clothes: '短袖+防晒衣', route: '夏季避暑路线' },
-            autumn: { temp: '12°C', clothes: '毛衣+厚外套', route: '秋季赏叶路线' },
-            winter: { temp: '-5°C', clothes: '羽绒服+围巾', route: '冬季玩雪路线' }
+            spring: { temp: '18°C', clothes: 'Легкая куртка + брюки', route: 'Весенний маршрут для прогулок' },
+            summer: { temp: '25°C', clothes: 'Футболка + защитная одежда от солнца', route: 'Летний маршрут от жары' },
+            autumn: { temp: '12°C', clothes: 'Свитер + теплая куртка', route: 'Осенний маршрут для просмотра листьев' },
+            winter: { temp: '-5°C', clothes: 'Пуховик + шарф', route: 'Зимний маршрут для игры в снег' }
         };
         
         // 全景图数据
@@ -818,12 +827,12 @@
             winter: 'https://aka.doubaocdn.com/s/zXuV1wXtDZ'
         };
         
-        // 客服问答
+        // 客服问答（俄语）
         const chatQA = {
-            '门票多少钱': '景区门票成人票120元，儿童票60元，老人票60元，学生票80元。',
-            '开放时间': '景区夏季开放时间是08:00-18:00，冬季是08:30-17:30。',
-            '怎么去景区': '您可以自驾导航"Scenic Tourism景区"，也可以在市区乘坐旅游专线大巴直达。',
-            '有停车场吗': '有的，景区有大型停车场，小车停车费10元/天，非常方便。'
+            'Сколько стоит билет?': 'Билет для взрослых 120 юаней, для детей 60, для пожилых 60, для студентов 80.',
+            'Часы работы?': 'Летом парк работает 08:00-18:00, зимой 08:30-17:30.',
+            'Как доехать?': 'Вы можете доехать на машине по навигатору "Scenic Tourism", или сесть на туристический автобус из города.',
+            'Есть парковка?': 'Да, у нас большая парковка, парковка для машины 10 юаней в день.'
         };
         
         let viewer;
@@ -843,14 +852,14 @@
                         longitude: '-20deg',
                         latitude: '0deg',
                         element: document.createElement('div'),
-                        tooltip: '月亮湾'
+                        tooltip: 'Бухта Луны'
                     },
                     {
                         id: 'flower',
                         longitude: '40deg',
                         latitude: '-5deg',
                         element: document.createElement('div'),
-                        tooltip: '高山花海'
+                        tooltip: 'Горные цветы'
                     }
                 ]
             });
@@ -975,14 +984,14 @@
         const voiceBtn = document.getElementById('voiceBtn');
         voiceBtn.addEventListener('click', function() {
             if ('speechSynthesis' in window) {
-                const text = '欢迎来到Scenic Tourism景区，我是您的AI语音导游。这里融合了自然地貌与千年人文遗存，您可以拖动屏幕查看360度全景，点击热点查看景点详情，也可以切换四季查看不同季节的美景。祝您游玩愉快！';
+                const text = 'Добро пожаловать в парк Scenic Tourism! Я ваш AI-гид. Здесь сочетаются природные ландшафты и тысячелетняя культура. Вы можете перетащить экран, чтобы посмотреть 360-градусную панораму, нажать на точки, чтобы увидеть детали достопримечательностей, или переключить сезоны, чтобы увидеть пейзажи в разное время года. Приятного отдыха!';
                 
                 const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'zh-CN';
+                utterance.lang = 'ru-RU';
                 utterance.rate = 0.9;
                 window.speechSynthesis.speak(utterance);
             } else {
-                alert('您的浏览器不支持语音功能');
+                alert('Ваш браузер не поддерживает голосовую функцию');
             }
         });
         
@@ -1005,10 +1014,10 @@
             
             const collectBtn = document.getElementById('collectSpotBtn');
             if (collectedSpots.includes(spotId)) {
-                collectBtn.innerHTML = '<i class="fa fa-heart mr-1"></i>已收藏';
+                collectBtn.innerHTML = '<i class="fa fa-heart mr-1"></i>В избранном';
                 collectBtn.disabled = true;
             } else {
-                collectBtn.innerHTML = '<i class="fa fa-heart-o mr-1"></i>收藏';
+                collectBtn.innerHTML = '<i class="fa fa-heart-o mr-1"></i>Добавить в избранное';
                 collectBtn.disabled = false;
             }
             
@@ -1031,13 +1040,13 @@
             if (!collectedSpots.includes(spotId)) {
                 collectedSpots.push(spotId);
                 updateCollectCount();
-                this.innerHTML = '<i class="fa fa-heart mr-1"></i>已收藏';
+                this.innerHTML = '<i class="fa fa-heart mr-1"></i>В избранном';
                 this.disabled = true;
             }
         });
         
         function updateCollectCount() {
-            document.querySelector('#collectBtn span').textContent = `已收藏 ${collectedSpots.length} 个景点`;
+            document.querySelector('#collectBtn span').textContent = `В избранном: ${collectedSpots.length} мест`;
         }
         
         // 路线生成
@@ -1125,7 +1134,7 @@
                     <div class="bg-forest rounded-2xl rounded-tr-none px-4 py-2 text-white text-sm max-w-[80%]">
                         ${text}
                     </div>
-                    <div class="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center text-white text-sm">你</div>
+                    <div class="w-8 h-8 rounded-full bg-gray-500 flex items-center justify-center text-white text-sm">Вы</div>
                 `;
             } else {
                 div.innerHTML = `
@@ -1149,7 +1158,7 @@
             
             // 简单的问答回复
             setTimeout(() => {
-                const reply = chatQA[text] || '您的问题我已经收到，会尽快为您转接人工客服！';
+                const reply = chatQA[text] || 'Ваш вопрос получен, мы скоро переведем вас на живого консультанта!';
                 addChatMessage(reply);
             }, 500);
         }
@@ -1175,7 +1184,7 @@
         // 表单提交
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('预约申请已提交，我们将尽快与您联系！');
+            alert('Заявка на бронирование отправлена, мы скоро с вами свяжемся!');
             this.reset();
         });
         
